@@ -1,0 +1,27 @@
+COMPOSER_CARD=admin@kigen
+COMPOSER_NAMESPACES=never
+COMPOSER_AUTHENTICATION=true
+COMPOSER_MULTIUSER=true
+COMPOSER_PROVIDERS='{
+    "github": {
+        "provider": "github",
+        "module": "passport-github",
+        "clientID": "380de965810a9e1e3c12",
+        "clientSecret": "c2e578f96a3f4daf07318df24fc4202ebf25138f",
+        "authPath": "/auth/github",
+        "callbackURL": "/auth/github/callback",
+        "successRedirect": "/",
+        "failureRedirect": "/"
+    }
+}'
+COMPOSER_DATASOURCES='{
+    "db": {
+        "name": "mysql1",
+        "connector": "mysql",
+        "host": "0.0.0.0",
+	"port": 3306,
+  	"database": "kigenapi",
+  	"username": "root",
+  	"password": "123"
+    }
+}'
