@@ -27,12 +27,16 @@
             <div class="col-lg-3 order-lg-2">
               <div class="card-profile-image">
                 <a href="#">
-                  <img src="/source/assets/img/theme/xoai-cat-chu-da-vang.png" class="rounded-circle">
+                  <img src="/{{ App\Product::find(1)->images->first()->img_link }}" class="rounded-circle">
                 </a>
               </div>
             </div>
             <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
               <div class="card-profile-actions py-4 mt-lg-0">
+                  <div class="visible-print text-center">
+                      {!! QrCode::size(100)->generate('https://google.com') !!}
+                      <p>Quét để vào trang thông tin này</p>
+                  </div>
               </div>
             </div>
             <div class="col-lg-4 order-lg-1">
@@ -45,10 +49,8 @@
             </div>
           </div>
           <div class="text-center mt-5">
-            <h3>{{ __('Xoài cát chu') }}
-              {{-- <span class="font-weight-light">, 27</span> --}}
+            <h3>{{ App\Product::find(1)->name }}
             </h3>
-            <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{ Session::get('currentUser')->email }}</div>
             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Trang trại Vĩnh nông</div>
             <div><i class="ni education_hat mr-2"></i>Vĩnh Hà, Phú Xuyên</div>
           </div>
@@ -74,7 +76,7 @@
           <div><i class="ni education_hat mr-2 justify-content-center"></i>Trạng thái: </div>
           <div><i class="ni education_hat mr-2 justify-content-center"></i>Đơn giá: {{ $productResponse['unitPrice'] }}</div>
           <div><i class="ni education_hat mr-2 justify-content-center"></i>Người sản xuất: {{ $productResponse['farmer'] }}</div>
-
+          <img src= "/{{$listPackageHistory[0]["eventsEmitted"][0]["imgLink"]}}" width="200" height="200" alt="Card image cap" class="m-3">
           </div>
         </div>
       </div>
@@ -87,6 +89,7 @@
               <h3>{{ __('Vận chuyển') }}</h3>
             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2 justify-content-center"></i>Ngày bắt đầu: {{ date('d-m-Y', strtotime($listPackageHistory[$i]['transactionTimestamp'])) }}</div>
             <div><i class="ni education_hat mr-2 justify-content-center"></i>Người nhận: {{ $listPackageHistory[$i]['eventsEmitted'][0]['toId'] }}</div>
+            <img src= "/{{$listPackageHistory[$i]["eventsEmitted"][0]["imgLink"]}}" width="200" height="200" alt="Card image cap" class="m-3">
             </div>
           </div>
         </div>

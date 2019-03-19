@@ -17,8 +17,7 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('name')->unique();
-            $table->timestamp('harvest_at')->nullable();
-            $table->bigInteger('unit_price');
+            $table->string('description')->nullable();
             });
     }
 

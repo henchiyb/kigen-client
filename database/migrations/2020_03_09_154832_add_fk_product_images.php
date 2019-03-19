@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFkFarmImages extends Migration
+class AddFkProductImages extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddFkFarmImages extends Migration
      */
     public function up()
     {
-        Schema::table('farm_images', function(Blueprint $table){
-            $table->foreign('farm_id')->references('id')->on('farms');
+        Schema::table('product_images', function(Blueprint $table){
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 
@@ -25,9 +25,9 @@ class AddFkFarmImages extends Migration
      */
     public function down()
     {
-        // Schema::table('farm_images', function(Blueprint $table){
-        //     $table->dropForeign('farm_id');
-        //     $table->dropColumn('farm_id');
+        // Schema::table('product_images', function(Blueprint $table){
+        //     $table->dropForeign('product_id');
+        //     $table->dropColumn('product_id');
         // });
     }
 }

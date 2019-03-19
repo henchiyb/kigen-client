@@ -34,6 +34,7 @@ class HistoryController extends Controller
             ]);
             $productResponse = json_decode($productResponse->getBody(), true);
             $qryResponse = json_decode($qryResponse->getBody(), true);
+            // dd($productResponse);
             if (!empty($productResponse['error'])){
                 return view('welcome')->withErrors("message", "Sản phẩm không tồn tại");
             //     return redirect()->back()->withErrors("Sản phẩm không tồn tại");
@@ -42,11 +43,11 @@ class HistoryController extends Controller
                 if(!empty($history["eventsEmitted"])){
                     if ($history["eventsEmitted"][0]["productPackId"] 
                         == $request->id){
-                        array_unshift($listPackageHistory, $history);
+                        array_push($listPackageHistory, $history);
                     }
                 }
             }
-            // dd($qryResponse);
+            // dd($listPackageHistory);
             return view('histories.show', compact('listPackageHistory', 'productResponse'));
     }
 }

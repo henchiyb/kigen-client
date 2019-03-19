@@ -19,7 +19,7 @@
               <div class="text-center text-muted mb-4">
                 <h2>Tạo lô hàng mới cho sản phẩm </h2>
               </div>
-              <form method="POST" action="{{ route('post-create-package') }}">
+              <form id="create-form" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="form-group">
                   <div class="input-group input-group-alternative mb-3">
@@ -69,6 +69,14 @@
                     <input class="form-control" placeholder="Trạng thái sản phẩm" name="status" type="text">
                   </div>
                 </div>
+                <div class="form-group">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-collection"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Anh" type="file" name="upload-file">
+                    </div>
+                  </div>
                 <div class="text-center">
                   <button type="button submit" class="btn btn-primary mt-4">Tạo lô hàng</button>
                 </div>
@@ -80,3 +88,25 @@
     </div>
   </section>
 @endsection
+
+<script>
+    $(document).ready(function(){
+    
+     $('#create-form').on('submit', function(event){
+      event.preventDefault();
+      $.ajax({
+       url:"{{ route('post-create-package') }}",
+       method:"POST",
+       data:new FormData(this),
+       dataType:'JSON',
+       contentType: false,
+       cache: false,
+       processData: false,
+       success:function(data)
+       {
+       }
+      })
+     });
+    
+    });
+    </script>
