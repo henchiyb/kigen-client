@@ -16,7 +16,7 @@ class CreateFarmImagesTable extends Migration
         Schema::dropIfExists('farm_images');
         Schema::create('farm_images', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('farm_id')->unsigned();
+            $table->bigInteger('farm_id')->unsigned();
             $table->string('img_link');
             $table->timestamps();
         });

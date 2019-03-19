@@ -11,6 +11,7 @@
       <span></span>
       <span></span>
     </div>
+    
     <div class="container pt-lg-md">
       <div class="row justify-content-center">
         <div class="col-lg-5">
@@ -38,13 +39,20 @@
               <div class="text-center text-muted mb-4">
                 <small>Hoặc tạo tài khoản mới </small>
               </div>
-              <form role="form">
+              <form method="POST" action="{{ route('post-register') }}">
+                {{ csrf_field() }}
                 <div class="form-group">
                   <div class="input-group input-group-alternative mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Tên" type="text">
+                    <input id="name" name="username" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="Tên" type="text" value="{{ old('username') }}" required autofocus>
+                    
+                    @if ($errors->has('username'))
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('username') }}</strong>
+                      </span>
+                    @endif
                   </div>
                 </div>
                 <div class="form-group">
@@ -52,7 +60,13 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Email" type="email">
+                    <input name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Email" type="email" value="{{ old('email') }}" required>
+
+                    @if ($errors->has('email'))
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('email') }}</strong>
+                      </span>
+                    @endif
                   </div>
                 </div>
                 <div class="form-group">
@@ -60,7 +74,12 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Mật khẩu" type="password">
+                    <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Mật khẩu" name="password" type="password" required>
+                    @if ($errors->has('password'))
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('password') }}</strong>
+                      </span>
+                    @endif
                   </div>
                 </div>
                 <div class="row my-4">
@@ -76,7 +95,7 @@
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-primary mt-4">Tạo tài khoản</button>
+                  <button type="submit button" class="btn btn-primary mt-4">Tạo tài khoản</button>
                 </div>
               </form>
             </div>

@@ -13,24 +13,32 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
-Route::get('/lg', function () {
+Route::get('/login', function () {
     return view('form_login');
-});
+})->name('login');
 
-Route::get('/rg', function () {
+Route::get('/register', function () {
     return view('form_register');
-});
+})->name('register');
 
-Route::get('/profile', function () {
-    return view('user_profile');
-});
+Route::get('/profile', 'Auth\\LoginController@profile')->name('profile');
+Route::get('/histories/{id}', 'HistoryController@getHistory')->name('history');
 
 Route::get('/create', function () {
     return view('form_package_create');
 });
 
-Auth::routes();
+Route::get('/transfer', function () {
+    return view('form_transfer');
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/register', 'Auth\\RegisterController@register')->name('post-register');
+Route::post('/login', 'Auth\\LoginController@login')->name('post-login');
+Route::post('/logout', 'Auth\\LoginController@logout')->name('logout');
+Route::post('/profile', 'Auth\\LoginController@setPermission')->name('upload-permission');
+Route::post('/create', 'PackageController@create')->name('post-create-package');
+Route::post('/transfer', 'PackageController@transfer')->name('post-transfer');
+
+

@@ -11,6 +11,7 @@
       <span></span>
       <span></span>
     </div>
+    
     <div class="container pt-lg-md">
       <div class="row justify-content-center">
         <div class="col-lg-5">
@@ -38,13 +39,25 @@
               <div class="text-center text-muted mb-4">
                 <small>Hoặc đăng nhập bằng tài khoản</small>
               </div>
-              <form role="form">
+              
+              @if ($errors)
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $errors->first() }}</strong>
+                </span>
+              @endif
+              <form method="POST" action="{{ route('post-login') }}">
+                  {{ csrf_field() }}
                 <div class="form-group mb-3">
                   <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Email" type="email">
+                    <input name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Email" type="email" value="{{ old('email') }}" required>
+                    @if ($errors->has('email'))
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('email') }}</strong>
+                      </span>
+                    @endif
                   </div>
                 </div>
                 <div class="form-group">
@@ -52,7 +65,12 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Password" type="password">
+                    <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Mật khẩu" name="password" type="password" required>
+                    @if ($errors->has('password'))
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('password') }}</strong>
+                      </span>
+                    @endif
                   </div>
                 </div>
                 <div class="custom-control custom-control-alternative custom-checkbox">
@@ -62,7 +80,7 @@
                   </label>
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-primary my-4">Đăng nhập</button>
+                  <button type="button submit" class="btn btn-primary my-4">Đăng nhập</button>
                 </div>
               </form>
             </div>
@@ -75,8 +93,7 @@
               </a>
             </div>
             <div class="col-6 text-right">
-              {{-- TODO: link to register --}}
-              <a href="#" class="text-light">
+            <a href="{{ route('register') }}" type="submit" class="text-light">
                 <small>Create new account</small>
               </a>
             </div>

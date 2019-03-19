@@ -1,7 +1,7 @@
 <header class="header-global">
         <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
           <div class="container">
-            <a class="navbar-brand mr-lg-5" href="#">
+            <a class="navbar-brand mr-lg-5" href="/">
                 {{-- TODO: icon of page white --}}
               <img src="/source/assets/img/brand/white.png">
             </a>
@@ -25,6 +25,7 @@
                   </div>
                 </div>
               </div>
+              @if (Session::get('currentUser') == null)
               <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
                 <li class="nav-item dropdown">
                   <a href="#" class="nav-link" data-toggle="dropdown" href="#" role="button">
@@ -33,8 +34,7 @@
                   </a>
                   <div class="dropdown-menu dropdown-menu-xl">
                     <div class="dropdown-menu-inner">
-                        {{-- TODO: link to register --}}
-                      <a href="#" class="media d-flex align-items-center">
+                    <a href="{{ route('register') }}" class="media d-flex align-items-center">
                         <div class="icon icon-shape bg-gradient-primary rounded-circle text-white">
                           <i class="ni ni-spaceship"></i>
                         </div>
@@ -43,8 +43,7 @@
                           <p class="description d-none d-md-inline-block mb-0">{{ __('Tạo tài khoản mới để tham gia vào hệ thống') }}</p>
                         </div>
                       </a>
-                      {{-- TODO: link to Log in --}}
-                      <a href="#" class="media d-flex align-items-center">
+                      <a href="{{ route('login') }}" class="media d-flex align-items-center">
                         <div class="icon icon-shape bg-gradient-success rounded-circle text-white">
                           <i class="ni ni-palette"></i>
                         </div>
@@ -95,8 +94,7 @@
                   </a>
                 </li>
                 <li class="nav-item d-none d-lg-block ml-lg-4">
-                    {{-- TODO: link to register --}}
-                  <a href="#" target="_blank" class="btn btn-neutral btn-icon">
+                  <a href="{{ route('register') }}" target="_blank" class="btn btn-neutral btn-icon">
                     <span class="btn-inner--icon">
                       <i class="ni ni-lock-circle-open mr-2"></i>
                     </span>
@@ -104,6 +102,56 @@
                   </a>
                 </li>
               </ul>
+              @else
+              <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link" data-toggle="dropdown" href="#" role="button">
+                    <i class="ni ni-ui-04 d-lg-none"></i>
+                    <span class="nav-link-inner--text">{{ __('Chức năng') }}</span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-xl">
+                    <div class="dropdown-menu-inner">
+                    <a href="/create" class="media d-flex align-items-center">
+                        <div class="icon icon-shape bg-gradient-primary rounded-circle text-white">
+                          <i class="ni ni-spaceship"></i>
+                        </div>
+                        <div class="media-body ml-3">
+                          <h6 class="heading text-primary mb-md-1">{{ __('Tạo gói hàng mới') }}</h6>
+                          <p class="description d-none d-md-inline-block mb-0">{{ __('Tạo gói hàng mới được đóng gói') }}</p>
+                        </div>
+                      </a>
+                      <a href="/transfer" class="media d-flex align-items-center">
+                        <div class="icon icon-shape bg-gradient-success rounded-circle text-white">
+                          <i class="ni ni-palette"></i>
+                        </div>
+                        <div class="media-body ml-3">
+                          <h6 class="heading text-primary mb-md-1">{{ __('Chuyển giao') }}</h6>
+                          <p class="description d-none d-md-inline-block mb-0">{{ __('Chuyển gói hàng cho nhân viên khác') }}</p>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+                <li class="nav-item">
+                  <a class="nav-link nav-link-icon" 
+                    href="#" target="_blank"> {{ Session::get('currentUser')->name }}
+                  </a>
+                </li>
+                <li class="nav-item d-none d-lg-block ml-lg-4">
+                    <form action="{{ route('logout') }}" method="POST">
+                      {{ csrf_field() }}
+                      <button type="submit" class="btn btn-neutral btn-icon">
+                        <span class="btn-inner--icon">
+                          <i class="ni ni-lock-circle-open mr-2"></i>
+                        </span>
+                        <span class="nav-link-inner--text">{{ __('Đăng xuất') }}</span>
+                      </button>
+                    </form>
+                </li>
+              </ul>
+              @endif
             </div>
           </div>
         </nav>
