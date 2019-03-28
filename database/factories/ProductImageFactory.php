@@ -17,7 +17,7 @@ use Faker\Generator as Faker;
 
 $factory->define(ProductImage::class, function (Faker $faker) {
     return [
-        'product_id' => $faker->numberBetween($min = 1, $max = 15),
+        'product_id' => $faker->numberBetween($min = 1, $max = 9),
         'img_link' => "xoai-cat-chu-da-vang.png"
     ];
 });
