@@ -18,6 +18,7 @@ class CreateFarmsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('address');
+            $table->string('description');
             $table->timestamps();
         });
     }

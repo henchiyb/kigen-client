@@ -94,7 +94,7 @@
                   </a>
                 </li>
                 <li class="nav-item d-none d-lg-block ml-lg-4">
-                  <a href="{{ route('register') }}" target="_blank" class="btn btn-neutral btn-icon">
+                  <a href="/register" target="_blank" class="btn btn-neutral btn-icon">
                     <span class="btn-inner--icon">
                       <i class="ni ni-lock-circle-open mr-2"></i>
                     </span>
@@ -131,6 +131,12 @@
                       </a>
                     </div>
                   </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a href="/profile" class="nav-link" role="button">
+                    <i class="ni ni-ui-04 d-lg-none"></i>
+                    <span class="nav-link-inner--text">{{ __('Thông tin cá nhân') }}</span>
+                  </a>
                 </li>
               </ul>
               <ul class="navbar-nav align-items-lg-center ml-lg-auto">

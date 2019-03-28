@@ -12,21 +12,24 @@
         <link href="/source/assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
         <link href="/source/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link type="text/css" href="/source/assets/css/argon.css?v=1.0.1" rel="stylesheet">
-        <link type="text/css" href="/source/assets/css/docs.min.css" rel="stylesheet">
-
+        <link rel="stylesheet" href="/source/assets/css/reset.css">
+	    <link rel="stylesheet" href="/source/assets/css/style.css">
+        
+        <script src="/source/assets/js/modernizr.js"></script>
         <script src="/source/assets/vendor/jquery/jquery.min.js"></script>
         <script src="/source/assets/vendor/popper/popper.min.js"></script>
         <script src="/source/assets/vendor/bootstrap/bootstrap.min.js"></script>
         <script src="/source/assets/vendor/headroom/headroom.min.js"></script>
         <script src="/source/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
         <script src="/source/assets/js/argon.js?v=1.0.1"></script>
-
     </head>  
     <body>
         @include('layouts.header')
         <main>
+            @include('layouts.success-message')
             @yield('content')
         </main>
         @include('layouts.footer')
+        @yield('script')
     </body>
 </html>

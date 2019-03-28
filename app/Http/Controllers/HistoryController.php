@@ -8,46 +8,58 @@ use GuzzleHttp\Client;
 use JsonMapper;
 use Redirect;
 use Session;
+use App\Card;
+use App\User;
 
 class HistoryController extends Controller
 {
     public function getHistory(Request $request){
         $client = new Client(['base_uri' => 'http://localhost:3000/api/', 
             'http_errors' => false]);
-            $listPackageHistory = [];
-            $productUrl = sprintf("kigen.assets.ProductPackage/%d", $request->id);
-            $productResponse = $client->request('GET', $productUrl, [
+        $reqParamArray = array();
+        $reqParamArray['productPackId'] = $request->id;
+        $params[] = $reqParamArray;
+        $response = $client->request('POST', 'kigen.transactions.GetHistoryTransaction', [
                 'headers' => [
                     'X-Access-Token' => Session::get('currentUser')->accessToken
-                ]
+                    
+                ],
+                'json' => $reqParamArray
             ]);
-            $farmer = $client->request('GET', 'users', [
+        $response = json_decode($response->getBody(), true);
+        // dd($response);       
+        $url = sprintf('system/historian/%s', $response['transactionId']);
+        $qryResponse = $client->request('GET', $url, [
                 'headers' => [
                     'X-Access-Token' => Session::get('currentUser')->accessToken
                 ],
-                'filter' => []
-            ]);
-            $qryResponse = $client->request('GET', 'system/historian', [
-                'headers' => [
-                    'X-Access-Token' => Session::get('currentUser')->accessToken
+                'query' => [
+                    'filter' => '{ "include":"resolve"}'
                 ]
             ]);
-            $productResponse = json_decode($productResponse->getBody(), true);
-            $qryResponse = json_decode($qryResponse->getBody(), true);
-            // dd($productResponse);
-            if (!empty($productResponse['error'])){
-                return view('welcome')->withErrors("message", "Sản phẩm không tồn tại");
-            //     return redirect()->back()->withErrors("Sản phẩm không tồn tại");
+        $qryResponse = json_decode($qryResponse->getBody(), true);
+        $results = $qryResponse['eventsEmitted'][0]['results'];
+        // dd($results);
+        $listTransaction = [];
+        $listProduct = [];
+        for ($i = 0; $i < sizeof($results); $i++){
+            if ($i % 2 != 0) {
+                $txId = $results[$i];
+                $url = sprintf('system/historian/%s', $txId);
+                $qryResponse = $client->request('GET', $url, [
+                    'headers' => [
+                        'X-Access-Token' => Session::get('currentUser')->accessToken
+                    ]
+                ]);
+                $qryResponse = json_decode($qryResponse->getBody(), true);
+                array_push($listTransaction, $qryResponse);
+            } else {
+                $result = json_decode($results[$i], true);
+                array_push($listProduct, $result);
             }
-            foreach ($qryResponse as $history){
-                if(!empty($history["eventsEmitted"])){
-                    if ($history["eventsEmitted"][0]["productPackId"] 
-                        == $request->id){
-                        array_push($listPackageHistory, $history);
-                    }
-                }
-            }
-            // dd($listPackageHistory);
-            return view('histories.show', compact('listPackageHistory', 'productResponse'));
+        }
+        // dd($listTransaction);
+        $str = preg_split('/#/', $listProduct[0]['farmer'])[1] . "@kigen";
+        return view('histories.show', compact('listTransaction', 'listProduct'));
     }
 }

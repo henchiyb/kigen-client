@@ -39,20 +39,28 @@
               <div class="text-center text-muted mb-4">
                 <small>Hoặc tạo tài khoản mới </small>
               </div>
-              <form method="POST" action="{{ route('post-register') }}">
+              <form id="register-form" method="POST" enctype="multipart/form-data" action="{{ route('post-register') }}">
                 {{ csrf_field() }}
                 <div class="form-group">
                   <div class="input-group input-group-alternative mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                     </div>
-                    <input id="name" name="username" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="Tên" type="text" value="{{ old('username') }}" required autofocus>
+                    <input id="name" name="username" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="Tên đăng nhập" type="text" value="{{ old('username') }}" required autofocus>
                     
                     @if ($errors->has('username'))
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('username') }}</strong>
                       </span>
                     @endif
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                    </div>
+                    <input id="realname" name="realname" class="form-control" placeholder="Họ và tên" type="text" value="{{ old('realname') }}" required autofocus>
                   </div>
                 </div>
                 <div class="form-group">
@@ -82,6 +90,53 @@
                     @endif
                   </div>
                 </div>
+                <div class="form-group">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                    <input class="form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }} datepicker" placeholder="Ngày sinh" name="birthday" type="text" required>
+                    @if ($errors->has('birthday'))
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('birthday') }}</strong>
+                      </span>
+                    @endif
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                    <input class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" placeholder="Địa chỉ" name="address" type="text" required>
+                    @if ($errors->has('address'))
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('address') }}</strong>
+                      </span>
+                    @endif
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                    <input class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="Số điện thoại" name="phone" type="text" required>
+                    @if ($errors->has('phone'))
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('phone') }}</strong>
+                      </span>
+                    @endif
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-collection"></i></span>
+                    </div>
+                    <input class="form-control" placeholder="Anh" type="file" name="upload-file">
+                  </div>
+                </div>
                 <div class="row my-4">
                   <div class="col-12">
                     <div class="custom-control custom-control-alternative custom-checkbox">
@@ -95,7 +150,7 @@
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="submit button" class="btn btn-primary mt-4">Tạo tài khoản</button>
+                  <button type="submit button" class="btn btn-primary">Tạo tài khoản</button>
                 </div>
               </form>
             </div>
@@ -105,3 +160,4 @@
     </div>
   </section>
 @endsection
+

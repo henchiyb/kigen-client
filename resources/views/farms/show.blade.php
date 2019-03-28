@@ -27,41 +27,26 @@
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
                   <a href="#">
-                    <img src="/source/assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                  <img src="/{{ $farm->images->first()->img_link }}" class="rounded-circle">
                   </a>
                 </div>
               </div>
               <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
                 <div class="card-profile-actions py-4 mt-lg-0">
                   <a href="#" class="btn btn-sm btn-info mr-4">Connect</a>
-                  <a href="#" class="btn btn-sm btn-default float-right">Message</a>
+                  {{-- <a href="#" class="btn btn-sm btn-default float-right">Message</a> --}}
                 </div>
               </div>
               <div class="col-lg-4 order-lg-1">
                 <div class="card-profile-actions py-4 mt-lg-0">
-                  @if ($isPermissioned)
-                    Chức danh: {{ $qryResponse[0]['name']}}
-                  @else
-                    <form id="permission-form" method="POST" enctype="multipart/form-data">
-                      {!! csrf_field() !!}
-                      <div class="card-profile-actions py-4 mt-lg-0 text-center">
-                        <input type="file" name="upload-file">
-                        <button type="submit" class="btn btn-default mr-4 mt-2">
-                          <small>Submit</small>
-                        </button>
-                      </div>                                                        
-                    </form>
-                  @endif
+                  
                 </div>
               </div>
             </div>
             <div class="text-center mt-5">
-              <h3>{{ Session::get('currentUser')->name }}
-                <span class="font-weight-light">, 27</span>
+              <h3>{{ $farm->name }}
               </h3>
-              <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{ Session::get('currentUser')->email }}</div>
-              <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer</div>
-              <div><i class="ni education_hat mr-2"></i>University of Computer Science</div>
+              <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{ $farm->address }}</div>
             </div>
             <div class="mt-5 py-5 border-top text-center">
               <div class="row justify-content-center">
@@ -75,25 +60,3 @@
     </section>
   </div>
   @endsection
-
-  <script>
-    $(document).ready(function(){
-    
-     $('#permission-form').on('submit', function(event){
-      event.preventDefault();
-      $.ajax({
-       url:"{{ route('upload-permission') }}",
-       method:"POST",
-       data:new FormData(this),
-       dataType:'JSON',
-       contentType: false,
-       cache: false,
-       processData: false,
-       success:function(data)
-       {
-       }
-      })
-     });
-    
-    });
-    </script>

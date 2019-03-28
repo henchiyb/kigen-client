@@ -39,6 +39,7 @@ class LoginController extends Controller
         $qryResponse = json_decode($qryResponse->getBody(), true);
         // dd($qryResponse);
         $cUser = new User();
+        $cUser->id = $response["userId"];
         $cUser->name = $qryResponse['username'];
         $cUser->email = $qryResponse['email'];
         $cUser->accessToken = $response['id'];
@@ -95,10 +96,26 @@ class LoginController extends Controller
             $isPermissioned = true;
             if (empty($qryResponse) || !empty($qryResponse['error'])){
                 $isPermissioned = false;
+                $role = 'Chưa có';
+            } else {
+                $role = preg_split('/@/', $qryResponse[0]['name'])[0];
             }
-            return view('user_profile', compact('isPermissioned', 'qryResponse'));
+            $url = sprintf('users/%d', Session::get('currentUser')->id);
+            $qryResponse = $client->request('GET', $url, [
+                'headers' => [
+                    'X-Access-Token' => Session::get('currentUser')->accessToken
+                ]
+            ]);
+            $qryResponse = json_decode($qryResponse->getBody(), true);
+            return view('users.current_profile', compact('isPermissioned', 'qryResponse', 'role'));
         // } catch (GuzzleException $e) {
         //     return Redirect::back()->withErrors("message", "Kết nối thất bại");
         // }
+    }
+
+    public function otherProfile(Request $request){
+        $user = User::find($request->id);
+        // dd($user);
+        return view('users.user_profile', compact('user'));
     }
 }

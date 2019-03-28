@@ -25,6 +25,10 @@ Route::get('/register', function () {
 
 Route::get('/profile', 'Auth\\LoginController@profile')->name('profile');
 Route::get('/histories/{id}', 'HistoryController@getHistory')->name('history');
+Route::get('/farms/{id}', 'FarmController@show')->name('show-farm');
+Route::get('/users/{id}', 'Auth\\LoginController@otherProfile')->name('other-profile');
+
+
 
 Route::get('/create', function () {
     return view('form_package_create');

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Exception\ClientErrorResponseException;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use GuzzleHttp\Client;
 use JsonMapper;
 Use Redirect;
@@ -18,11 +20,15 @@ class RegisterController extends Controller
         $reqParamArray = array();
         $reqParamArray['email'] = $request['email'];
         $reqParamArray['username'] = $request['username'];
+        $reqParamArray['realname'] = $request['realname'];
         $reqParamArray['password'] = $request['password'];
         $reqParamArray['address'] = $request['address'];
         $reqParamArray['birthday'] = $request['birthday'];
         $reqParamArray['phone'] = $request['phone'];
-        $reqParamArray['img_link'] = $request['img_link'];
+        $image = $request->file('upload-file');
+        $extension = $image->getClientOriginalExtension();
+        Storage::disk('public')->put($image->getFilename().'.'.$extension,  File::get($image));
+        $reqParamArray['img_link'] = $image->getFilename().'.'.$extension;
 
         $params[] = $reqParamArray;
     
@@ -33,6 +39,6 @@ class RegisterController extends Controller
         if (array_key_exists('error', $response)){
             return Redirect::back()->withErrors($response['error']['details']['messages']);
         }
-        return redirect()->route('login');     
+        return view('form_login');     
     }
 }

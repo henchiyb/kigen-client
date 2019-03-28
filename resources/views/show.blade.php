@@ -56,80 +56,74 @@
           <div class="text-center">
             <h3>{{ App\Product::find(1)->name }}
             </h3>
+            <div class="h6"><i class="ni business_briefcase-24 mr-2"></i>Trang trại Vĩnh nông</div>
+            <div><i class="ni education_hat mr-2"></i>Vĩnh Hà, Phú Xuyên</div>
           </div>
           <div class="mt-4 py-5 border-top text-center">
             <div class="row justify-content-center">
               <div class="col-lg-9">
-                <p> </p>                
-              </div>
+                <p>Xoài cát chu (tên khoa học là Mangifera indica) vốn là giống xoài truyền thống ở Đồng Tháp biết bao đời nay, có thể nói nó thuần chủng 100%. Xoài được nhận xét là hoa quả rất ít xơ, hương thơm nồng nàn quyến rũ, vị ngọt đầm đà. </p>                </div>
             </div>
             <div class="cd-horizontal-timeline">
-            <div class="timeline">
-                <div class="events-wrapper">
-                  <div class="events">
-                    <ol>
-                      <li>
-                        <a href="#0" data-date="{{ date('d/m/Y H:m', strtotime($listTransaction[0]['transactionTimestamp']))}}" class="selected"><i class="fa fa-play" style="color:green;" aria-hidden="true"></i>
-                          {{ date('d/m', strtotime($listProduct[0]['createDate'])) }}</a>
-                      </li>
-                      @for ($i = 1; $i < sizeof($listTransaction); $i++)
-                          <li><a href="#0" data-date="{{ date('d/m/Y H:m', strtotime($listTransaction[$i]['transactionTimestamp'])) }}">
-                            @if ($listTransaction[$i]['transactionType'] == 'org.hyperledger.composer.system.UpdateAsset')
-                            <i class="fa fa-exclamation-triangle" style="color:yellow;" aria-hidden="true"></i>
-                            @else
+              <div class="timeline">
+                  <div class="events-wrapper">
+                    <div class="events">
+                      <ol>
+                          <li><a href="#0" data-date="25/03/2019">
                             <i class="fa fa-truck" aria-hidden="true"></i>
-                            @endif
+                            25/03/2019</a>
+                          </li>
+                        {{-- @for ($i = 0; $i < sizeof($listTransaction); $i++)
+                          
+                          <li><a href="#0" data-date="{{ date('d/m/Y H:m', strtotime($listTransaction[$i]['transactionTimestamp'])) }}">
+                            <i class="fa fa-truck" aria-hidden="true"></i>
                             {{ date('d/m', strtotime($listTransaction[$i]['transactionTimestamp']))}}</a>
                           </li>
-                        @endfor
-                    </ol>
-                    <span class="filling-line" aria-hidden="true"></span>
-                  </div> <!-- .events -->
-                </div> <!-- .events-wrapper -->
-                  
-                <ul class="cd-timeline-navigation">
-                  <li><a href="#0" class="prev inactive">Prev</a></li>
-                  <li><a href="#0" class="next">Next</a></li>
-                </ul> <!-- .cd-timeline-navigation -->
+                        @endfor --}}
+                      </ol>
+                      <span class="filling-line" aria-hidden="true"></span>
+                    </div> <!-- .events -->
+                  </div> <!-- .events-wrapper -->
+                    
+                  <ul class="cd-timeline-navigation">
+                    <li><a href="#0" class="prev inactive">Prev</a></li>
+                    <li><a href="#0" class="next">Next</a></li>
+                  </ul> <!-- .cd-timeline-navigation -->
               </div> <!-- .timeline -->
           
               <div class="events-content">
-                <ol>
-                    <li class="selected" data-date="{{ date('d/m/Y H:m', strtotime($listTransaction[0]['transactionTimestamp']))}}">
-                      <h3>{{ __('Thu hoạch') }}</h3>
-                      <h5>Ngày thu hoạch: {{ date('d/m/Y H:m', strtotime($listProduct[0]['createDate']))}}</em>
-                      <div><i class="ni education_hat mr-2 justify-content-center"></i>Người sản xuất: <a href="/users/{{ App\Card::where('name',preg_split('/#/', $listProduct[0]['farmer'])[1] . "@kigen")->first()->user->id }}">
-                        {{ App\Card::where('name',preg_split('/#/', $listProduct[0]['farmer'])[1] . "@kigen")->first()->user->username }} </a> 
-                      </div>
-                      <img src= "/{{ $listProduct[0]['imgLink'] }}" width="200" height="200" alt="Card image cap" class="m-3">
-                    </li>
-                  @for ($i = 1; $i < sizeof($listProduct); $i++)
-                      @if ($listTransaction[$i]['transactionType'] == 'org.hyperledger.composer.system.UpdateAsset')
-                      <li data-date="{{ date('d/m/Y H:m', strtotime($listTransaction[$i]['transactionTimestamp'])) }}">
-                        <h3>{{ __('Thay đổi dữ liệu') }}</h3>
-                        <h5>Ngày thay đổi: {{ date('d/m/Y H:m', strtotime($listProduct[$i]['createDate']))}}</em>
-                        <div><i class="ni education_hat mr-2 justify-content-center"></i>Người thay đổi: {{ preg_split('/#/', $listTransaction[$i]['participantInvoking'])[1] }}</div>
-                        <h5>Dữ liệu thay đổi từ {{ json_encode(array_diff($listProduct[$i - 1], $listProduct[$i])) }} sang 
-                            {{ json_encode(array_diff($listProduct[$i], $listProduct[$i - 1])) }} </h5>
-                      </li>    
+                  <ol>
+                    <li data-date="25/03/2019">
+                        <h2>Event title here</h2>
+                        <em>March 3rd, 2015</em>
+                        <p>	
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
+                        </p>
+                      </li>
+                    {{-- @for ($i = 0; $i < sizeof($listProduct); $i++)
+                      @if ($listTransaction[$i]['transactionType'] == 'kigen.transactions.CreatePackageTransaction')
+                        <li class="selected" data-date="{{ date('d/m/Y H:m', strtotime($listTransaction[$i]['transactionTimestamp']))}}">
+                          <h3>{{ __('Thu hoạch') }}</h3>
+                          <h5>Ngày thu hoạch: {{ date('d/m/Y H:m', strtotime($listProduct[$i]['createDate']))}}</em>
+                          <div><i class="ni education_hat mr-2 justify-content-center"></i>Người sản xuất: <a href="/users/{{ App\Card::where('name',preg_split('/#/', $listProduct[$i]['farmer'])[1] . "@kigen")->first()->user->id }}">
+                            {{ App\Card::where('name',preg_split('/#/', $listProduct[$i]['farmer'])[1] . "@kigen")->first()->user->username }} </a> 
+                          </div>
+                          <img src= "/{{ $listProduct[$i]['imgLink'] }}" width="200" height="200" alt="Card image cap" class="m-3">
+                        </li>
+                      @elseif ($listTransaction[$i]['transactionType'] == 'org.hyperledger.composer.system.UpdateAsset')
+                        <p>aa</p>
                       @else
                         <li data-date="{{ date('d/m/Y H:m', strtotime($listTransaction[$i]['transactionTimestamp'])) }}">
-                          @if ($listTransaction[$i]['eventsEmitted'][0]['type'] == 'TRANSPORTATION')
-                          <h3>{{ __('Vận chuyển') }}</h3>
-                          @elseif ($listTransaction[$i]['eventsEmitted'][0]['type'] == 'STORED')
-                          <h3>{{ __('Lưu trữ') }}</h3>
-                          @elseif ($listTransaction[$i]['eventsEmitted'][0]['type'] == 'RETAIL')
-                          <h3>{{ __('Bán lẻ') }}</h3>
-                          @endif
+                          <h3>{{ __('Thu hoạch') }}</h3>
                           <h5>Ngày bắt đầu: {{ date('d/m/Y H:m', strtotime($listTransaction[$i]['transactionTimestamp'])) }}</em>
                           <div><i class="ni education_hat mr-2 justify-content-center"></i>Người nhận: {{ $listTransaction[$i]['eventsEmitted'][0]['toId'] }}</div>
                           <img src= "/{{$listTransaction[$i]["eventsEmitted"][0]["imgLink"]}}" width="200" height="200" alt="Card image cap" class="m-3">
                         </li>
                       @endif
-                    @endfor
-                </ol>
+                    @endfor --}}
+                  </ol>
               </div>
-              </div>
+            </div>
           </div>
         </div>
       </div>
