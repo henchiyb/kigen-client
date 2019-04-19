@@ -42,11 +42,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'sql12.freemysqlhosting.net'),
+            'host' => env('DB_HOST', 'kigenclient.ck0ytthqtn5a.ap-southeast-1.rds.amazonaws.com'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'sql12287786'),
-            'username' => env('DB_USERNAME', 'sql12287786'),
-            'password' => env('DB_PASSWORD', 'HQLSQ7RTW9'),
+            'database' => env('DB_DATABASE', 'kigenclient'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', 'ngoan123'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

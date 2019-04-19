@@ -14,7 +14,7 @@ class AddCreateAndUpdateToUser extends Migration
     public function up()
     {
         Schema::table('user', function (Blueprint $table) {
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 
