@@ -14,7 +14,7 @@ use App\User;
 class HistoryController extends Controller
 {
     public function getHistory(Request $request){
-        $client = new Client(['base_uri' => 'http://localhost:3000/api/']);
+        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
         try {
             $reqParamArray = array();
             $reqParamArray['productPackId'] = $request->id;

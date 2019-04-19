@@ -18,7 +18,7 @@ class LoginController extends Controller
 {
     protected $redirectTo = '/';
     public function login(Request $request){
-        $client = new Client(['base_uri' => 'http://localhost:3000/api/']);
+        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
         try {
             $reqParamArray = array();
             $reqParamArray['email'] = $request['email'];
@@ -71,7 +71,7 @@ class LoginController extends Controller
     }
 
     public function logout(){
-        $client = new Client(['base_uri' => 'http://localhost:3000/api/']);
+        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
         try {
             $response = $client->request('POST', 'users/logout', [
                 'headers' => [
@@ -87,7 +87,7 @@ class LoginController extends Controller
 
     public function setPermission(Request $request){
         $file = $request->file('upload-file');
-        $client = new Client(['base_uri' => 'http://localhost:3000/api/']);
+        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
         try {
             $response = $client->request('POST', 'wallet/import', [
                 'headers' => [
@@ -110,7 +110,7 @@ class LoginController extends Controller
     }
 
     public function profile(){
-        $client = new Client(['base_uri' => 'http://localhost:3000/api/']);
+        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
         try {
             $qryResponse = $client->request('GET', 'wallet', [
                 'headers' => [
