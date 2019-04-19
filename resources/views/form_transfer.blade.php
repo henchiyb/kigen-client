@@ -17,7 +17,7 @@
           <div class="card bg-secondary shadow border-0">
             <div class="card-body px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
-                <h2>Chuyển hàng cho nhân viên </h2>
+                <h2>{{ __('transfer.transport_to') }}</h2>
               </div>
               <form id="transfer-form" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
@@ -26,7 +26,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-app"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Sản phẩm" name="product" type="text">
+                    <input class="form-control" placeholder="{{ __('transfer.product') }}" name="product" type="text" required>
                   </div>
                 </div>
                 <div class="form-group">
@@ -34,7 +34,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                       </div>
-                      <input class="form-control" placeholder="Người nhận" name="newHolder" type="text">
+                      <input class="form-control" placeholder="{{ __('transfer.receiver') }}" name="newHolder" type="text" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -42,7 +42,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                         </div>
-                        <input class="form-control datepicker" placeholder="Ngày chuyển" name="harvest" type="text">
+                        <input class="form-control datepicker" placeholder="{{ __('transfer.trans_date') }}" name="harvest" type="text" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -50,10 +50,10 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-collection"></i></span>
                       </div>
-                    <select name="type" class="form-control">
-                      <option value="TRANSPORTATION" selected="selected">Vận chuyển</option>
-                      <option value="STORED">Lưu trữ</option>
-                      <option value="RETAIL">Bán hàng</option>
+                    <select name="type" class="form-control" required>
+                      <option value="TRANSPORTATION" selected="selected">{{ __('transfer.transportation') }}</option>
+                      <option value="STORED">{{ __('transfer.stored') }}</option>
+                      <option value="RETAIL">{{ __('transfer.retailed') }}</option>
                     </select>
                   </div>
                 </div>
@@ -62,12 +62,13 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-collection"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Anh" type="file" name="upload-file">
+                    <input class="form-control" placeholder="Anh" type="file" name="upload-file" required>
                   </div>
                 </div>
 
                 <div class="text-center">
-                  <button type="button submit" class="btn btn-primary mt-4">Chuyển giao</button>
+                  <input id="submit-handle" type="submit" style="display: none">
+                  <button id="btnActive" type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#exampleModal">{{ __('transfer.transport') }}</button>
                 </div>
               </form>
             </div>
@@ -75,27 +76,31 @@
         </div>
       </div>
     </div>
-  </section>
-@endsection
 
-<script>
-  $(document).ready(function(){
-  
-   $('#transfer-form').on('submit', function(event){
-    event.preventDefault();
-    $.ajax({
-     url:"{{ route('post-transfer') }}",
-     method:"POST",
-     data:new FormData(this),
-     dataType:'JSON',
-     contentType: false,
-     cache: false,
-     processData: false,
-     success:function(data)
-     {
-     }
-    })
-   });
-  
-  });
-  </script>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{ __('transfer.confirm') }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{ __('transfer.confirm_content') }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" onclick="onClickBtnSubmit()" class="btn btn-primary">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    function onClickBtnSubmit(){
+      $('#submit-handle').click();
+      $('#exampleModal').modal('toggle');
+    } 
+</script>
+@endsection

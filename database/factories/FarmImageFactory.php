@@ -18,6 +18,6 @@ use Faker\Generator as Faker;
 $factory->define(FarmImage::class, function (Faker $faker) {
     return [
         'farm_id' => $faker->numberBetween($min = 1, $max = 10),
-        'img_link' => "xoai-cat-chu-da-vang.png"
+        'img_link' => "nong-trai.jpg"
     ];
 });

@@ -18,7 +18,7 @@
           <div class="card bg-secondary shadow border-0">
             <div class="card-header bg-white pb-5">
               <div class="text-muted text-center mb-3">
-                <small>Đăng nhập bằng</small>
+                <small>{{ __('login.login_by_sns') }}</small>
               </div>
               <div class="btn-wrapper text-center">
                 <a href="#" class="btn btn-neutral btn-icon">
@@ -37,7 +37,7 @@
             </div>
             <div class="card-body px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
-                <small>Hoặc đăng nhập bằng tài khoản</small>
+                <small>{{ __('login.login_by_account') }}</small>
               </div>
               
               @if ($errors)
@@ -65,7 +65,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Mật khẩu" name="password" type="password" required>
+                    <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('login.password') }}" name="password" type="password" required>
                     @if ($errors->has('password'))
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('password') }}</strong>
@@ -76,11 +76,11 @@
                 <div class="custom-control custom-control-alternative custom-checkbox">
                   <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
                   <label class="custom-control-label" for=" customCheckLogin">
-                    <span>Remember me</span>
+                    <span>{{ __('login.remember_me') }}</span>
                   </label>
                 </div>
                 <div class="text-center">
-                  <button type="button submit" class="btn btn-primary my-4">Đăng nhập</button>
+                  <button type="button submit" class="btn btn-primary my-4">{{ __('login.login') }}</button>
                 </div>
               </form>
             </div>
@@ -89,12 +89,12 @@
             <div class="col-6">
               {{-- TODO: Link to forgot pasword --}}
               <a href="#" class="text-light">
-                <small>Forgot password?</small>
+                <small>{{ __('login.forgot') }}</small>
               </a>
             </div>
             <div class="col-6 text-right">
-            <a href="{{ route('register') }}" type="submit" class="text-light">
-                <small>Create new account</small>
+              <a href="{{ route('register') }}" class="text-light">
+                <small>{{ __('login.new_account') }}</small>
               </a>
             </div>
           </div>

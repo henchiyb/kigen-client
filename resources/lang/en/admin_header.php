@@ -1,0 +1,25 @@
+<?php
+
+return [
+  'HRM' => 'Human resource management',
+  'manager' => 'Manager',
+  'all_manager' => 'All manager',
+  'farm_manager' => 'Farm manager',
+  'transportation_manager' => 'Transportation manager',
+  'store_manager' => 'Store manager',
+  'employer' => 'Employer',
+  'all_employers' => 'All employers',
+  'farm_employer' => 'Farm employer',
+  'transportation_employer' => 'Transportation employer',
+  'store_employer' => 'Store employer',
+  'list_of_farm_store' => 'List of Farms/Stores',
+  'farms' => 'Farms',
+  'stores' => 'Stores',
+  'products' => 'Products',
+  'all_products' => 'All products',
+  'bonus' => 'Bonus',
+  'account' => 'Account',
+  'register' => 'Register',
+  'login' => 'Login',
+  'logout' => 'Logout',
+];

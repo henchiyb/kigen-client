@@ -1,0 +1,2 @@
+<h1>Xin chào, {{ $name }}</h1>
+<p>Đây là mail tự động từ hệ thống kigen. File cấp quyền được đính kèm dưới thư này. Bạn hãy đăng nhập vào hệ thống, vào phần thông tin cá nhân, upload file này để được cấp quyền.</p>

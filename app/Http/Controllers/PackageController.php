@@ -11,75 +11,149 @@ use JsonMapper;
 use Redirect;
 use Session;
 use App\Card;
+use App\Product;
+use DB;
 
 class PackageController extends Controller
 {
     public function create(Request $request){
-        $client = new Client(['base_uri' => 'http://localhost:3000/api/', 'http_errors' => false]);
-        $qryResponse = $client->request('GET', 'kigen.assets.ProductPackage', [
+        $client = new Client(['base_uri' => 'http://localhost:3000/api/']);
+        try {
+            $qryResponse = $client->request('GET', 'kigen.assets.ProductPackage', [
             'headers' => [
                 'X-Access-Token' => Session::get('currentUser')->accessToken
             ]
         ]);
-        $qryResponse = json_decode($qryResponse->getBody(), true);
-        $reqParamArray = array();
-        $reqParamArray['productPackId'] = sizeof($qryResponse) + 1;
-        $reqParamArray['productSerial'] = $request['serial'];
-        // $reqParamArray['address'] = $request['address'];
-        $reqParamArray['createDate'] = $request['harvest'];
-        $reqParamArray['productStatus'] = $request['status'];
-        $reqParamArray['unitPrice'] = $request['unitPrice'];
-        $farmer = "kigen.participants.Farmer#" . preg_split('/@/', Card::where('userId', Session::get('currentUser')->id)->first()->name)[0];
-        $reqParamArray['farmer'] = $farmer;
-        $image = $request->file('upload-file');
-        $extension = $image->getClientOriginalExtension();
-        Storage::disk('public')->put($image->getFilename().'.'.$extension,  File::get($image));
-        $reqParamArray['imgLink'] = $image->getFilename().'.'.$extension;
-        $params[] = $reqParamArray;
-        
-        $response = $client->request('POST', 'kigen.transactions.CreatePackageTransaction', [
+            $qryResponse = json_decode($qryResponse->getBody(), true);
+            $reqParamArray = array();
+            $reqParamArray['$class'] = 'kigen.transactions.CreatePackageTransaction';
+            $reqParamArray['productPackId'] = sizeof($qryResponse) + 1;
+            $reqParamArray['productSerial'] = $request['name'];
+            //TODO
+            $reqParamArray['createDate'] = $request['harvest'];
+            $reqParamArray['productStatus'] = $request['status'];
+            $reqParamArray['farmId'] = $request['farmId'];
+            $reqParamArray['unitPrice'] = $request['unitPrice'];
+            $farmer = "kigen.participants.Farmer#" . preg_split('/@/', Card::where('userId', Session::get('currentUser')->id)->first()->name)[0];
+            $reqParamArray['farmer'] = $farmer;
+            $image = $request->file('upload-file');
+            $extension = $image->getClientOriginalExtension();
+            Storage::disk('public')->put($image->getFilename().'.'.$extension, File::get($image));
+            $reqParamArray['imgLink'] = $image->getFilename().'.'.$extension;
+            $params[] = $reqParamArray;
+            // dd($reqParamArray);
+            $response = $client->request('POST', 'kigen.transactions.CreatePackageTransaction', [
             'headers' => [
                 'X-Access-Token' => Session::get('currentUser')->accessToken
                 
             ],
             'json' => $reqParamArray
         ]);
-        $response = json_decode($response->getBody(), true);
-        if (array_key_exists('error', $response)){
-            return Redirect::back()->withErrors($response['error']['details']['messages']);
+            $response = json_decode($response->getBody(), true);
+            // if (array_key_exists('error', $response)){
+            //     return Redirect::back()->withErrors($response['error']['details']['messages']);
+            // }
+            return back()->with('success', 'Tạo thành công');
+        } catch (GuzzleException $e) {
+            return redirect()->back()->with('error', 'Create failed');
         }
-        return back()->with('success', 'Tạo thành công');
     }
 
     public function transfer(Request $request){
-        $client = new Client(['base_uri' => 'http://localhost:3000/api/', 'http_errors' => false]);
-        $reqParamArray = array();
-        // $reqParamArray['state'] = $request['state'];
-        $reqParamArray['type'] = $request['type'];
-        $reqParamArray['transferTime'] = $request['harvest'];
-        $reqParamArray['product'] = $request['product'];
-        $reqParamArray['newHolder'] = $request['newHolder'];
+        $client = new Client(['base_uri' => 'http://localhost:3000/api/']);
+        try {
+            $reqParamArray = array();
+            // $reqParamArray['state'] = $request['state'];
+            $reqParamArray['type'] = $request['type'];
+            $reqParamArray['transferTime'] = $request['harvest'];
+            $reqParamArray['product'] = $request['product'];
+            $reqParamArray['newHolder'] = $request['newHolder'];
 
-        $image = $request->file('upload-file');
-        $extension = $image->getClientOriginalExtension();
-        Storage::disk('public')->put($image->getFilename().'.'.$extension,  File::get($image));
-        $reqParamArray['imgLink'] = $image->getFilename().'.'.$extension;
+            $image = $request->file('upload-file');
+            $extension = $image->getClientOriginalExtension();
+            Storage::disk('public')->put($image->getFilename().'.'.$extension, File::get($image));
+            $reqParamArray['imgLink'] = $image->getFilename().'.'.$extension;
 
-        $params[] = $reqParamArray;
+            $params[] = $reqParamArray;
     
-        $response = $client->request('POST', 'kigen.transactions.TransferTransaction', [
+            $response = $client->request('POST', 'kigen.transactions.TransferTransaction', [
             'headers' => [
                 'X-Access-Token' => Session::get('currentUser')->accessToken
                 
             ],
             'json' => $reqParamArray
         ]);
-        $response = json_decode($response->getBody(), true);
-        // dd($response);
-        if (array_key_exists('error', $response)){
+            $response = json_decode($response->getBody(), true);
             // dd($response);
-            return Redirect::back()->withErrors($response['error']['details']['messages']);
+            // if (array_key_exists('error', $response)){
+            //     // dd($response);
+            //     return Redirect::back()->with('error', "Send error");
+            // }
+            return back()->with('success', 'Chuyển thành công');
+        } catch (GuzzleException $e){
+            return redirect()->back()->with('error', 'Transfer failed');
         }
-        return back()->with('success', 'Chuyển thành công');  
+    }
+
+    public function dataCreateAjax(Request $request)
+    {
+        $data = [];
+        if ($request->id == 'farm'){
+            if($request->has('q')){
+                $search = $request->q;
+                $data = DB::table("farms")
+                        ->select("id","name")
+                        ->where('name','LIKE',"%$search%")
+                        ->get();
+            }
+        } else {
+            if($request->has('q')){
+                $search = $request->q;
+                $data = DB::table("products")
+                        ->select("id","name")
+                        ->where('name','LIKE',"%$search%")
+                        ->get();
+            }
+        }
+        
+        return response()->json($data);
+    }
+
+    public function getHoldingProduct(){
+        $client = new Client(['base_uri' => 'http://localhost:3000/api/']);
+        try {
+            $role = preg_split('/@/', Session::get('currentUser')->card->name)[0];
+            // dd($role);
+            if (str_contains($role, 'transportationEmployer')) {
+                $rsName = "resource:kigen.participants.TransportationEmployer#" . $role;
+            } elseif (str_contains($role, 'farmer')) {
+                $rsName = "resource:kigen.participants.Farmer#" . $role;
+            } elseif (str_contains($role, 'storeEmployer')) {
+                $rsName = "resource:kigen.participants.StoreEmployer#" . $role;
+            } elseif (str_contains($role, 'warehouseEmployer')) {
+                $rsName = "resource:kigen.participants.WarehouseEmployer#" . $role;
+            } elseif (str_contains($role, 'transportationEmployer')) {
+            }
+            $query = sprintf('{ "where": {"productHolder": "%s" } }', $rsName);
+
+            $listProductPackage = $client->request('GET', 'kigen.assets.ProductPackage', [
+            'headers' => [
+                'X-Access-Token' => Session::get('currentUser')->accessToken
+            ],
+            'query' => [
+                'filter' => $query
+            ]
+        ]);
+            $listProductPackage = json_decode($listProductPackage->getBody(), true);
+            $listProducts = [];
+            foreach ($listProductPackage as $package) {
+                array_push($listProducts, Product::find($package['productSerial']));
+            }
+            // dd($listProducts);
+            return view('products.show-holding', compact('listProductPackage', 'listProducts'));
+            //TODO
+        } catch (GuzzleException $e) {
+            return redirect()->back()->with('error', 'Show failed');
+        }
     }
 }

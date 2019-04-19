@@ -17,32 +17,18 @@
           <div class="card bg-secondary shadow border-0">
             <div class="card-body px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
-                <h2>Tạo lô hàng mới cho sản phẩm </h2>
+                <h2>{{ __('create_package.create_package') }}</h2>
               </div>
-              <form id="create-form" method="POST" enctype="multipart/form-data">
+              <form id="create-form" method="POST" enctype="multipart/form-data" action="{{ route('post-create-package') }}">
                 {{ csrf_field() }}
                 <div class="form-group">
-                  <div class="input-group input-group-alternative mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-app"></i></span>
-                    </div>
-                    <input class="form-control" placeholder="Tên sản phẩm" name="name" type="text">
+                  <div class="input-group-alternative mb-3">
+                    <select class="form-control productSelect" name="name" required></select>
                   </div>
                 </div>
                 <div class="form-group">
-                    <div class="input-group input-group-alternative mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                      </div>
-                      <input class="form-control" placeholder="Mã sản phẩm" name="serial" type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group input-group-alternative mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-bag-17"></i></span>
-                    </div>
-                    <input class="form-control" placeholder="Nơi sản xuất" name="address" type="text">
+                  <div class="input-group-alternative mb-3">
+                    <select class="form-control input-group-alternative farmSelect" name="farmId" required type="text"></select>
                   </div>
                 </div>
                 <div class="form-group">
@@ -50,7 +36,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                         </div>
-                        <input class="form-control datepicker" placeholder="Ngày thu hoạch" name="harvest" type="text">
+                        <input class="form-control datepicker" placeholder="{{ __('create_package.harvest_date') }}" name="harvest" type="text" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -58,7 +44,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-collection"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Đơn giá" name="unitPrice" type="number">
+                    <input class="form-control" placeholder="{{ __('create_package.price') }}" name="unitPrice" type="number" required>
                   </div>
                 </div>
                 <div class="form-group">
@@ -66,7 +52,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-collection"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Trạng thái sản phẩm" name="status" type="text">
+                    <input class="form-control" placeholder="{{ __('create_package.status') }}" name="status" type="text" required>
                   </div>
                 </div>
                 <div class="form-group">
@@ -74,39 +60,44 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-collection"></i></span>
                       </div>
-                      <input class="form-control" placeholder="Anh" type="file" name="upload-file">
+                      <input class="form-control" placeholder="Anh" type="file" name="upload-file" required>
                     </div>
                   </div>
                 <div class="text-center">
-                  <button type="button submit" class="btn btn-primary mt-4">Tạo lô hàng</button>
+                  <button id="btnActive" type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#exampleModal">{{ __('create_package.create') }}</button>
                 </div>
+                <input id="submit-handle" type="submit" style="display: none">
               </form>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-@endsection
 
-<script>
-    $(document).ready(function(){
-    
-     $('#create-form').on('submit', function(event){
-      event.preventDefault();
-      $.ajax({
-       url:"{{ route('post-create-package') }}",
-       method:"POST",
-       data:new FormData(this),
-       dataType:'JSON',
-       contentType: false,
-       cache: false,
-       processData: false,
-       success:function(data)
-       {
-       }
-      })
-     });
-    
-    });
-    </script>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ __('create_package.confirm') }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{ __('create_package.modal_content') }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" onclick="onClickBtnSubmit()" class="btn btn-primary btn-submit-create">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+      function onClickBtnSubmit(){
+        $('#submit-handle').click();
+        $('#exampleModal').modal('toggle');
+      } 
+  </script>
+@endsection

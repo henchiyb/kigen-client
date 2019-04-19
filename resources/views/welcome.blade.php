@@ -18,15 +18,15 @@
               <div class="col px-0">
                 <div class="row">
                   <div class="col-lg-6">
-                    <h1 class="display-3 text-white">Truy xuất nguồn gốc
-                      <span>nông sản và thực phẩm</span>
+                    <h1 class="display-3 text-white">{{ __('welcome.traceability') }}
+                      <span>{{ __('welcome.product') }}</span>
                     </h1>
-                    <p class="lead  text-white">Hệ thống quản lý chuỗi cung ứng thực phẩm sạch và truy xuất nguồn gốc nông sản</p>
+                    <p class="lead  text-white">{{ __('welcome.system') }}</p>
                     <div class="btn-wrapper">
                         {{-- TODO link to guide  --}}
                       <a href="#" class="btn btn-info btn-icon mb-3 mb-sm-0">
                         <span class="btn-inner--icon"><i class="fa fa-book"></i></span>
-                        <span class="btn-inner--text">Hướng dẫn sử dụng</span>
+                        <span class="btn-inner--text">{{ __('welcome.guide') }}</span>
                       </a>
                     </div>
                   </div>

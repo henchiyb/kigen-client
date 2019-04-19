@@ -18,7 +18,7 @@
           <div class="card bg-secondary shadow border-0">
             <div class="card-header bg-white pb-5">
               <div class="text-muted text-center mb-3">
-                <small>Đăng ký với</small>
+                <small>{{ __('register.register') }}</small>
               </div>
               <div class="text-center">
                 <a href="#" class="btn btn-neutral btn-icon mr-4">
@@ -37,7 +37,7 @@
             </div>
             <div class="card-body px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
-                <small>Hoặc tạo tài khoản mới </small>
+                <small>{{ __('register.new_account') }} </small>
               </div>
               <form id="register-form" method="POST" enctype="multipart/form-data" action="{{ route('post-register') }}">
                 {{ csrf_field() }}
@@ -46,7 +46,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                     </div>
-                    <input id="name" name="username" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="Tên đăng nhập" type="text" value="{{ old('username') }}" required autofocus>
+                    <input id="name" name="username" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="{{ __('register.username') }}" type="text" value="{{ old('username') }}" required autofocus>
                     
                     @if ($errors->has('username'))
                       <span class="invalid-feedback" role="alert">
@@ -60,7 +60,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                     </div>
-                    <input id="realname" name="realname" class="form-control" placeholder="Họ và tên" type="text" value="{{ old('realname') }}" required autofocus>
+                    <input id="realname" name="realname" class="form-control" placeholder="{{ __('register.realname') }}" type="text" value="{{ old('realname') }}" required autofocus>
                   </div>
                 </div>
                 <div class="form-group">
@@ -82,7 +82,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Mật khẩu" name="password" type="password" required>
+                    <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('register.password') }}" name="password" type="password" required>
                     @if ($errors->has('password'))
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('password') }}</strong>
@@ -95,7 +95,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }} datepicker" placeholder="Ngày sinh" name="birthday" type="text" required>
+                    <input class="form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }} datepicker" placeholder="{{ __('register.birthday') }}" name="birthday" type="text" required>
                     @if ($errors->has('birthday'))
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('birthday') }}</strong>
@@ -108,7 +108,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" placeholder="Địa chỉ" name="address" type="text" required>
+                    <input class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" placeholder="{{ __('register.address') }}" name="address" type="text" required>
                     @if ($errors->has('address'))
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('address') }}</strong>
@@ -121,7 +121,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
-                    <input class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="Số điện thoại" name="phone" type="text" required>
+                    <input class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="{{ __('register.phone_number') }}" name="phone" type="text" required>
                     @if ($errors->has('phone'))
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('phone') }}</strong>
@@ -134,7 +134,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-collection"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Anh" type="file" name="upload-file">
+                    <input class="form-control" placeholder="Anh" type="file" name="upload-file" required>
                   </div>
                 </div>
                 <div class="row my-4">
@@ -142,15 +142,15 @@
                     <div class="custom-control custom-control-alternative custom-checkbox">
                       <input class="custom-control-input" id="customCheckRegister" type="checkbox">
                       <label class="custom-control-label" for="customCheckRegister">
-                        <span>Tôi đồng ý với 
-                          <a href="#">Privacy Policy</a>
+                        <span>{{ __('register.agree') }} 
+                          <a href="#">{{ __('register.policy') }}</a>
                         </span>
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="submit button" class="btn btn-primary">Tạo tài khoản</button>
+                <button type="submit button" class="btn btn-primary">{{ __('register.submit') }}</button>
                 </div>
               </form>
             </div>

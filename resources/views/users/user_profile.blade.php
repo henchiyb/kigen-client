@@ -27,7 +27,7 @@
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
                   <a href="#">
-                  <img src="/{{ $user->img_link }}" class="rounded-circle">
+                  <img src="/{{ $user->img_link }}" width="150" height="150" class="rounded-circle">
                   </a>
                 </div>
               </div>
@@ -39,8 +39,7 @@
               </div>
               <div class="col-lg-4 order-lg-1">
                 <div class="card-profile-actions py-4 mt-lg-0">
-                    Chức danh: 
-                  
+                    Chức danh: {{ $role }}
                 </div>
               </div>
             </div>

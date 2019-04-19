@@ -160,4 +160,42 @@ $(document).ready(function() {
 
         event.preventDefault();
     });
+    $('.farmSelect').select2({
+        placeholder: 'Chọn nơi sản xuất',
+        ajax: {
+          url: '/select2-autocomplete-ajax/farm',
+          dataType: 'json',
+          delay: 250,
+          processResults: function (data) {
+            return {
+              results:  $.map(data, function (item) {
+                    return {
+                        text: item.name,
+                        id: item.id
+                    }
+                })
+            };
+          },
+          cache: true
+        }
+      });
+      $('.productSelect').select2({
+        placeholder: 'Chọn sản phẩm',
+        ajax: {
+          url: '/select2-autocomplete-ajax/product',
+          dataType: 'json',
+          delay: 250,
+          processResults: function (data) {
+            return {
+              results:  $.map(data, function (item) {
+                    return {
+                        text: item.name,
+                        id: item.id
+                    }
+                })
+            };
+          },
+          cache: true
+        }
+      });
  });   

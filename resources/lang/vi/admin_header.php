@@ -1,0 +1,25 @@
+<?php
+
+return [
+  'HRM' => 'Quản lý nhân sự',
+  'manager' => 'Quản lý',
+  'all_manager' => 'Tất cả Quản lý',
+  'farm_manager' => 'Quản lý Nông trại',
+  'transportation_manager' => 'Quản lý Vận chuyển',
+  'store_manager' => 'Quản lý Cửa hàng',
+  'employer' => 'Nhân viên',
+  'all_employers' => 'Tất cả Nhân viên',
+  'farm_employer' => 'Nhân viên Nông trại',
+  'transportation_employer' => 'Nhân viên Vận chuyển',
+  'store_employer' => 'Nhân viên Cửa hàng',
+  'list_of_farm_store' => 'Hệ thống nông trại/cửa hàng',
+  'farms' => 'Nông trại',
+  'stores' => 'Cửa hàng',
+  'products' => 'Sản phẩm',
+  'all_products' => 'Tất cả sản phẩm',
+  'bonus' => 'Thêm',
+  'account' => 'Tài khoản',
+  'register' => 'Đăng ký',
+  'login' => 'Đăng nhập',
+  'logout' => 'Đăng xuất',
+];

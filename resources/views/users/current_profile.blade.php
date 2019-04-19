@@ -27,7 +27,7 @@
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
                   <a href="#">
-                  <img src="/{{ $qryResponse['img_link'] }}" class="rounded-circle">
+                  <img src="/{{ $qryResponse['img_link'] }}" width="150" height="150" class="rounded-circle">
                   </a>
                 </div>
               </div>
@@ -40,7 +40,7 @@
               <div class="col-lg-4 order-lg-1">
                 <div class="card-profile-actions py-4 mt-lg-0">
                   @if ($isPermissioned)
-                    Chức danh: {{ $role }}
+                    {{ __('profile.position') }}{{ $role }}
                   @else
                     <form id="permission-form" method="POST" enctype="multipart/form-data">
                       {!! csrf_field() !!}
@@ -56,13 +56,13 @@
               </div>
             </div>
             <div class="text-center mt-5">
-              <h3>{{ Session::get('currentUser')->name }}
+              <h3>{{ Session::get('currentUser')->username }}
                 <span class="font-weight-light"></span>
               </h3>
               <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>Email: {{ Session::get('currentUser')->email }}</div>
-              <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Ngày sinh: {{ date('d/m/Y', strtotime($qryResponse['birthday'])) }}</div>
-              <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Điện thoại: {{ $qryResponse['phone'] }}</div>
-              <div><i class="ni education_hat mr-2"></i>Địa chỉ: {{ $qryResponse['address'] }}</div>
+              <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{ __('profile.birthday') }}{{ date('d/m/Y', strtotime($qryResponse['birthday'])) }}</div>
+              <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{ __('profile.phone') }}{{ $qryResponse['phone'] }}</div>
+              <div><i class="ni education_hat mr-2"></i>{{ __('profile.address') }}{{ $qryResponse['address'] }}</div>
             </div>
             <div class="mt-5 py-5 border-top text-center">
               <div class="row justify-content-center">
