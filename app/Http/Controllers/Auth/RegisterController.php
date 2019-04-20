@@ -16,8 +16,8 @@ class RegisterController extends Controller
     protected $redirectTo = '/';
 
     public function register(Request $request){
-        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/', 'http_errors' => false]);
-        // try { 18.236.74.178:3000
+        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
+        try { 
             $reqParamArray = array();
             $reqParamArray['email'] = $request['email'];
             $reqParamArray['username'] = $request['username'];
@@ -37,15 +37,15 @@ class RegisterController extends Controller
                 'json' => $reqParamArray
             ]);
             $response = json_decode($response->getBody(), true);
-            dd($response);
+            // dd($response);
 
             if (array_key_exists('error', $response)) {
                 return Redirect::back()->withErrors($response['error']['details']['messages']);
             }
             return view('form_login');
-        // } catch (GuzzleException $e){
-        //     dd($e);
-        //     return redirect()->back()->with('error', 'Register failed');    
-        // }
+        } catch (GuzzleException $e){
+            dd($e);
+            return redirect()->back()->with('error', 'Register failed');    
+        }
     }
 }
