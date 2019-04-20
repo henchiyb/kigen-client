@@ -29,17 +29,6 @@ class LoginController extends Controller
                 'json' => $reqParamArray
             ]);
             $response = json_decode($response->getBody(), true);
-            // if (array_key_exists('error', $response)){
-            //     return Redirect::back()->withErrors($response['error']['message']);
-            // }
-
-            $url = sprintf('users/%d', $response["userId"]);
-            $qryResponse = $client->request('GET', $url, [
-                'headers' => [
-                    'X-Access-Token' => $response['id']
-                ]
-            ]);
-            $qryResponse = json_decode($qryResponse->getBody(), true);
             $cUser = User::find($response["userId"]);
             $cUser->accessToken = $response['id'];
             Session::put('currentUser', $cUser);
@@ -147,13 +136,14 @@ class LoginController extends Controller
                     }
                 }
             }
-            $url = sprintf('users/%d', Session::get('currentUser')->id);
-            $qryResponse = $client->request('GET', $url, [
-                'headers' => [
-                    'X-Access-Token' => Session::get('currentUser')->accessToken
-                ]
-            ]);
-            $qryResponse = json_decode($qryResponse->getBody(), true);
+            // $url = sprintf('users/%d', Session::get('currentUser')->id);
+            // $qryResponse = $client->request('GET', $url, [
+            //     'headers' => [
+            //         'X-Access-Token' => Session::get('currentUser')->accessToken
+            //     ]
+            // ]);
+            // $qryResponse = json_decode($qryResponse->getBody(), true);
+            $qryResponse = User::find(Session::get('currentUser')->id)->first();
             return view('users.current_profile', compact('isPermissioned', 'qryResponse', 'role'));
         } catch (GuzzleException $e) {
             return Redirect::back()->with("error", "Kết nối thất bại");
