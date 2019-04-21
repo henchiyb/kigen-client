@@ -8,6 +8,9 @@ class User extends Model
 {
     protected $table = "user";
     
+    protected $fillable = ['id', 'realname', 'username', 'email',
+        'address', 'img_link', 'phone'];
+    
     public function hasRole($role){
         return ($role == $this->role);
     }

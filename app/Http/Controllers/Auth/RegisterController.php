@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use GuzzleHttp\Client;
+use App\Role\Role;
 use JsonMapper;
 Use Redirect;
 
@@ -16,7 +17,7 @@ class RegisterController extends Controller
     protected $redirectTo = '/';
 
     public function register(Request $request){
-        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
+        $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/']);
         try { 
             $reqParamArray = array();
             $reqParamArray['email'] = $request['email'];
@@ -26,6 +27,7 @@ class RegisterController extends Controller
             $reqParamArray['address'] = $request['address'];
             $reqParamArray['birthday'] = $request['birthday'];
             $reqParamArray['phone'] = $request['phone'];
+            $reqParamArray['role'] = Role::ROLE_GUEST;
             $image = $request->file('upload-file');
             $extension = $image->getClientOriginalExtension();
             Storage::disk('public')->put($image->getFilename().'.'.$extension, File::get($image));

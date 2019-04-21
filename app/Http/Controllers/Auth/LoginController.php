@@ -13,12 +13,13 @@ use Redirect;
 use App\User;
 use Session;
 use App\Role\Role;
+use DB;
 
 class LoginController extends Controller
 {
     protected $redirectTo = '/';
     public function login(Request $request){
-        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
+        $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/']);
         try {
             $reqParamArray = array();
             $reqParamArray['email'] = $request['email'];
@@ -29,38 +30,20 @@ class LoginController extends Controller
                 'json' => $reqParamArray
             ]);
             $response = json_decode($response->getBody(), true);
-            $cUser = User::find($response["userId"]);
+            
+            $cUser = USer::find($response['userId']);
+            // dd(DB::getQueryLog());
             $cUser->accessToken = $response['id'];
             Session::put('currentUser', $cUser);
-            if ($cUser->role == null && $cUser->card != null){
-                $role = preg_split('/@/', $cUser->card->name)[0];
-                if (str_contains($role, 'farmManager')){
-                    User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_FARM_MANAGER));
-                }
-                else if (str_contains($role, 'transportationManager')){
-                    User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_TRANSPORTATION_MANAGER));
-                }
-                else if (str_contains($role, 'storeManager')){
-                    User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_STORE_MANAGER));
-                }
-                else if (str_contains($role, 'farmer')){
-                    User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_FARMER));
-                }
-                else if (str_contains($role, 'transportationEmployer')){
-                    User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_TRANSPORTATION_EMPLOYER));
-                }
-                else if (str_contains($role, 'storeEmployer')){
-                    User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_STORE_EMPLOYER));
-                }
-            }
             return redirect()->route('welcome');
         } catch (GuzzleException $e) {
+            dd($e);
             return Redirect::back()->with('error', 'Login failed');
         }
     }
 
     public function logout(){
-        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
+        $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/']);
         try {
             $response = $client->request('POST', 'users/logout', [
                 'headers' => [
@@ -76,7 +59,7 @@ class LoginController extends Controller
 
     public function setPermission(Request $request){
         $file = $request->file('upload-file');
-        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
+        $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/']);
         try {
             $response = $client->request('POST', 'wallet/import', [
                 'headers' => [
@@ -99,7 +82,7 @@ class LoginController extends Controller
     }
 
     public function profile(){
-        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
+        $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/']);
         try {
             $qryResponse = $client->request('GET', 'wallet', [
                 'headers' => [
@@ -110,12 +93,12 @@ class LoginController extends Controller
             $isPermissioned = true;
             if (empty($qryResponse) || !empty($qryResponse['error'])){
                 $isPermissioned = false;
-                $role = 'Chưa có';
+                $role = 'Guest';
             } else {
                 $role = preg_split('/@/', $qryResponse[0]['name'])[0];
                 $user = User::where('id', Session::get('currentUser')->id)->first();
                 // $this.updateRole($user, $role);
-                if ($user->role == null){
+                if ($user->role == Role::ROLE_GUEST){
                     if (str_contains($role, 'farmManager')){
                         User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_FARM_MANAGER));
                     }
@@ -136,14 +119,14 @@ class LoginController extends Controller
                     }
                 }
             }
-            // $url = sprintf('users/%d', Session::get('currentUser')->id);
-            // $qryResponse = $client->request('GET', $url, [
-            //     'headers' => [
-            //         'X-Access-Token' => Session::get('currentUser')->accessToken
-            //     ]
-            // ]);
-            // $qryResponse = json_decode($qryResponse->getBody(), true);
-            $qryResponse = User::find(Session::get('currentUser')->id)->first();
+            $url = sprintf('users/%d', Session::get('currentUser')->id);
+            $qryResponse = $client->request('GET', $url, [
+                'headers' => [
+                    'X-Access-Token' => Session::get('currentUser')->accessToken
+                ]
+            ]);
+            $qryResponse = json_decode($qryResponse->getBody(), true);
+            // $qryResponse = User::find(Session::get('currentUser')->id)->first();
             return view('users.current_profile', compact('isPermissioned', 'qryResponse', 'role'));
         } catch (GuzzleException $e) {
             return Redirect::back()->with("error", "Kết nối thất bại");
@@ -151,37 +134,25 @@ class LoginController extends Controller
     }
 
     public function otherProfile(Request $request){
-        $user = User::find($request->id);
-        if (isset($user->card)){
-            $role = preg_split('/@/', $user->card->name)[0];
-        } else {
-            $role = 'Khách';
+        $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/']);
+        try {
+            $url = sprintf('users/%d', $request->id);
+            $qryResponse = $client->request('GET', $url, [
+                'headers' => [
+                    'X-Access-Token' => Session::get('currentUser')->accessToken
+                ]
+            ]);
+            $qryResponse = json_decode($qryResponse->getBody(), true);
+            $user = new User($qryResponse);
+            if (isset($user->card)) {
+                $role = preg_split('/@/', $user->card->name)[0];
+            } else {
+                $role = 'Khách';
+            }
+            return view('users.user_profile', compact('user', 'role'));
+        } catch (GuzzleException $e) {
+            dd($e);
+            return Redirect::back()->with("error", "Kết nối thất bại");
         }
-        // dd($user);
-        return view('users.user_profile', compact('user', 'role'));
-    }
-
-    private function updateRole($user, $role){
-        if ($user->role == null){
-            if (str_contains($role, 'farmManager')){
-                User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_FARM_MANAGER));
-            }
-            else if (str_contains($role, 'transportationManager')){
-                User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_TRANSPORTATION_MANAGER));
-            }
-            else if (str_contains($role, 'storeManager')){
-                User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_STORE_MANAGER));
-            }
-            else if (str_contains($role, 'farmer')){
-                User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_FARMER));
-            }
-            else if (str_contains($role, 'transportationEmployer')){
-                User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_TRANSPORTATION_EMPLOYER));
-            }
-            else if (str_contains($role, 'storeEmployer')){
-                User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_STORE_EMPLOYER));
-            }
-        }
-    
     }
 }

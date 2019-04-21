@@ -29,10 +29,10 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::get('/profile', 'Auth\\LoginController@profile')->name('profile');
-Route::get('/histories/{id}', 'HistoryController@getHistory')->name('history');
-Route::get('/farms/{id}', 'FarmController@show')->name('show-farm');
-Route::get('/products/{id}', 'ProductController@show')->name('show-product');
-Route::get('/users/{id}', 'Auth\\LoginController@otherProfile')->name('other-profile');
+Route::get('/histories/{id}', 'HistoryController@getHistory')->name('history')->middleware('check_login');
+Route::get('/farms/{id}', 'FarmController@show')->name('show-farm')->middleware('check_login');
+Route::get('/products/{id}', 'ProductController@show')->name('show-product')->middleware('check_login');
+Route::get('/users/{id}', 'Auth\\LoginController@otherProfile')->name('other-profile')->middleware('check_login');
 Route::get('select2-autocomplete-ajax/{id}', 'PackageController@dataCreateAjax');
 
 Route::get('/create', function () {

@@ -69,6 +69,23 @@
                 </li>
                 
               </ul>
+              <div class="dropdown align-items-lg-center ml-lg-auto">
+                  <a href="#" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" id="navbarDropdownMenuLink2">
+                    <i class="fa fa-language"></i> {{ __('header.language') }}
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                      <li>
+                          <a class="dropdown-item" href="/locale/en">
+                             English(EN)
+                          </a>
+                      </li>
+                      <li>
+                          <a class="dropdown-item" href="/locale/vi">
+                             Tiếng việt(VI)
+                          </a>
+                      </li>
+                  </ul>
+                </div>
               <ul class="navbar-nav align-items-lg-center ml-lg-auto">
                 <li class="nav-item">
                   <a class="nav-link nav-link-icon" href="https://www.facebook.com/ngynducnhan" target="_blank" data-toggle="tooltip" title="Thích trang trên Facebook">
@@ -95,7 +112,7 @@
                   </a>
                 </li>
                 <li class="nav-item d-none d-lg-block ml-lg-4">
-                  <a href="/register" target="_blank" class="btn btn-neutral btn-icon">
+                  <a href="{{ route('register') }}" target="_blank" class="btn btn-neutral btn-icon">
                     <span class="btn-inner--icon">
                       <i class="ni ni-lock-circle-open mr-2"></i>
                     </span>

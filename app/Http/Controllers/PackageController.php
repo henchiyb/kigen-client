@@ -17,7 +17,7 @@ use DB;
 class PackageController extends Controller
 {
     public function create(Request $request){
-        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
+        $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/']);
         try {
             $qryResponse = $client->request('GET', 'kigen.assets.ProductPackage', [
             'headers' => [
@@ -60,7 +60,7 @@ class PackageController extends Controller
     }
 
     public function transfer(Request $request){
-        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
+        $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/']);
         try {
             $reqParamArray = array();
             // $reqParamArray['state'] = $request['state'];
@@ -120,7 +120,7 @@ class PackageController extends Controller
     }
 
     public function getHoldingProduct(){
-        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/']);
+        $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/']);
         try {
             $role = preg_split('/@/', Session::get('currentUser')->card->name)[0];
             // dd($role);

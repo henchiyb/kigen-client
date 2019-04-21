@@ -121,7 +121,7 @@ class ManagerController extends Controller
     }
 
     public function showProducts(){
-        $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/', 
+        $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/', 
         'http_errors' => false]);
         $listProductPackage = $client->request('GET', 'kigen.assets.ProductPackage', [
             'headers' => [
@@ -149,8 +149,8 @@ class ManagerController extends Controller
         }
         // dd($request['activeUserId']);
 
-        // $client = new Client(['base_uri' => 'http://18.236.74.178:3000/api/', 'http_errors' => false]);
-        $adminClient = new Client(['base_uri' => 'http://18.236.74.178:3001/api/', 'http_errors' => false]);
+        // $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/', 'http_errors' => false]);
+        $adminClient = new Client(['base_uri' => 'http://54.212.34.46:3001/api/', 'http_errors' => false]);
         try {
             $url = sprintf("users/%d", $request['activeUserId']);
             $userResponse = $adminClient->request('GET', $url, [
