@@ -8,6 +8,7 @@ return [
   'password' => 'Mật khẩu',
   'birthday' => 'Ngày sinh',
   'address' => 'Địa chỉ',
+  'identityNumber' => 'Số CMND',
   'phone_number' => 'Số điện thoại',
   'agree' => 'Tôi đồng ý với',
   'policy' => 'Privacy Policy',

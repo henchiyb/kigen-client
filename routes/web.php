@@ -45,9 +45,10 @@ Route::get('/transfer', function () {
 
 Route::get('products', 'PackageController@getHoldingProduct')->name('holding-products');
 Route::get('admin/products', 'ManagerController@showProducts')->name('admin-products');
+Route::get('admin/packages', 'ManagerController@showProductsPackage')->name('admin-packages');
 
 
-Route::get('admin', 'ManagerController@index')->middleware('check_user_role:' . \App\Role\Role::ROLE_MANAGER);
+Route::get('admin', 'ManagerController@index');
 Route::get('farms', 'ManagerController@showFarms')->middleware('check_user_role:' . \App\Role\Role::ROLE_FARM_MANAGER);
 Route::get('stores', 'ManagerController@showStores')->middleware('check_user_role:' . \App\Role\Role::ROLE_STORE_MANAGER);
 

@@ -171,7 +171,10 @@
             <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
               <div class="card-profile-actions py-4 mt-lg-0">
                   <div class="visible-print text-center">
-                      {!! QrCode::size(100)->generate(Request::url()) !!}
+                    <a href="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate('QrCode as PNG image!')) !!}" download>
+                      <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate('QrCode as PNG image!')) !!}" >
+                    </a>
+                      {{-- {!! QrCode::size(100)->generate(Request::url()) !!} --}}
                       <p>Quét để vào trang thông tin này</p>
                   </div>
               </div>

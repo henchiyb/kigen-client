@@ -3,7 +3,7 @@
           <div class="container">
             <a class="navbar-brand mr-lg-5" href="/">
                 {{-- TODO: icon of page white --}}
-              <img src="/source/assets/img/brand/white.png">
+              <img width="180" height="100" src="/source/assets/img/namegrb.png">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -14,7 +14,7 @@
                   <div class="col-6 collapse-brand">
                     <a href="#">
                         {{-- TODO: icon of page blue --}}
-                      <img src="/source/assets/img/brand/blue.png">
+                      <img width="180" height="100" src="/source/assets/img/namebl.png">
                     </a>
                   </div>
                   <div class="col-6 collapse-close">

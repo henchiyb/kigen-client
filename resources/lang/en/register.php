@@ -8,6 +8,7 @@ return [
   'password' => 'Password',
   'birthday' => 'Birthday',
   'address' => 'Address',
+  'identityNumber' => 'Identity number',
   'phone_number' => 'Phone',
   'agree' => 'I agree with',
   'policy' => 'Privacy Policy',

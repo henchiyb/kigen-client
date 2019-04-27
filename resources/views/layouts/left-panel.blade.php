@@ -21,29 +21,29 @@
                     @if (Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_MAIN_MANAGER) || 
                         Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_ADMIN))
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart"></i>{{ __('admin_header.manager') }}</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user-shield"></i>{{ __('admin_header.manager') }}</a>
                         <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-area-chart"></i><a href="{{ route('all-managers') }}">{{ __('admin_header.all_manager') }}</a></li>
-                            <li><i class="menu-icon fa fa-line-chart"></i><a href="{{ route('farmer-managers') }}">{{ __('admin_header.farm_manager') }}</a></li>
-                            <li><i class="menu-icon fa fa-line-chart"></i><a href="{{ route('transportation-managers') }}">{{ __('admin_header.transportation_manager') }}</a></li>
-                            <li><i class="menu-icon fa fa-line-chart"></i><a href="{{ route('store-managers') }}">{{ __('admin_header.store_manager') }}</a></li>
+                        <li><i class="menu-icon fa fa-male"></i><a href="{{ route('all-managers') }}">{{ __('admin_header.all_manager') }}</a></li>
+                            <li><i class="menu-icon fa fa-male"></i><a href="{{ route('farmer-managers') }}">{{ __('admin_header.farm_manager') }}</a></li>
+                            <li><i class="menu-icon fa fa-male"></i><a href="{{ route('transportation-managers') }}">{{ __('admin_header.transportation_manager') }}</a></li>
+                            <li><i class="menu-icon fa fa-male"></i><a href="{{ route('store-managers') }}">{{ __('admin_header.store_manager') }}</a></li>
                         </ul>
                     </li>
                     @endif
 
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart"></i>{{ __('admin_header.employer') }}</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>{{ __('admin_header.employer') }}</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-area-chart"></i><a href="{{ route('all-employers') }}">{{ __('admin_header.all_employers') }}</a></li>
+                            <li><i class="menu-icon fa fa-users"></i><a href="{{ route('all-employers') }}">{{ __('admin_header.all_employers') }}</a></li>
                             @if (Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_MAIN_MANAGER) || 
                                 Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_FARM_MANAGER))
-                            <li><i class="menu-icon fa fa-line-chart"></i><a href="{{ route('farmer-employers') }}">{{ __('admin_header.farm_employer') }}</a></li>
+                            <li><i class="menu-icon fa fa-male"></i><a href="{{ route('farmer-employers') }}">{{ __('admin_header.farm_employer') }}</a></li>
                             @elseif (Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_MAIN_MANAGER) || 
                                 Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_TRANSPORTATION_MANAGER))
-                            <li><i class="menu-icon fa fa-line-chart"></i><a href="{{ route('transportation-employers') }}">{{ __('admin_header.transportation_employer') }}</a></li>
+                            <li><i class="menu-icon fa fa-male"></i><a href="{{ route('transportation-employers') }}">{{ __('admin_header.transportation_employer') }}</a></li>
                             @elseif (Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_MAIN_MANAGER) || 
                                 Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_STORE_MANAGER))
-                            <li><i class="menu-icon fa fa-line-chart"></i><a href="{{ route('store-employers') }}">{{ __('admin_header.store_employer') }}</a></li>
+                            <li><i class="menu-icon fa fa-male"></i><a href="{{ route('store-employers') }}">{{ __('admin_header.store_employer') }}</a></li>
                             @endif
                         </ul>
                     </li>
@@ -51,20 +51,22 @@
                     @if (\App\Role\RoleChecker::check(Session::get('currentUser'), \App\Role\Role::ROLE_FARM_MANAGER)
                         || \App\Role\RoleChecker::check(Session::get('currentUser'), \App\Role\Role::ROLE_STORE_MANAGER))
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart"></i>{{ __('admin_header.list_of_farm_store') }}</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>{{ __('admin_header.list_of_farm_store') }}</a>
                         <ul class="sub-menu children dropdown-menu">
                             @if (\App\Role\RoleChecker::check(Session::get('currentUser'), \App\Role\Role::ROLE_FARM_MANAGER))
-                            <li><i class="menu-icon fa fa-area-chart"></i><a href="/farms">{{ __('admin_header.farms') }}</a></li>
+                            <li><i class="menu-icon fa fa-tractor"></i><a href="/farms">{{ __('admin_header.farms') }}</a></li>
                             @elseif (\App\Role\RoleChecker::check(Session::get('currentUser'), \App\Role\Role::ROLE_FARM_MANAGER))
-                            <li><i class="menu-icon fa fa-line-chart"></i><a href="/stores">{{ __('admin_header.stores') }}</a></li>
+                            <li><i class="menu-icon fa fa-store"></i><a href="/stores">{{ __('admin_header.stores') }}</a></li>
+                            @elseif (\App\Role\RoleChecker::check(Session::get('currentUser'), \App\Role\Role::ROLE_WAREHOUSE_MANAGER))
+                            <li><i class="menu-icon fa fa-warehouse"></i><a href="/warehouses">{{ __('admin_header.warehouses') }}</a></li>
                             @endif
                         </ul>
                     </li>
                     @endif
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart"></i>{{ __('admin_header.products') }}</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-product-hunt"></i>{{ __('admin_header.products') }}</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-area-chart"></i><a href="/admin/products">{{ __('admin_header.all_products') }}</a></li>
+                            <li><i class="menu-icon fa fa-archive"></i><a href="/admin/products">{{ __('admin_header.all_products') }}</a></li>
                         </ul>
                     </li>
                     <li class="menu-title">{{ __('admin_header.bonus') }}</li><!-- /.menu-title -->

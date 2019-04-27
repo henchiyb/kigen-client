@@ -15,6 +15,7 @@ use Redirect;
 use Mail;
 use App\Role\RoleChecker;
 use App\Product;
+use App\Farm;
 
 class ManagerController extends Controller
 {
@@ -105,8 +106,8 @@ class ManagerController extends Controller
     }
 
     public function showFarms(){
-        $listFarms = Session::get('currentUser')->employers->all();
-        return view('admin.list_farms', compact('employers'));
+        $farms = Farm::all();
+        return view('admin.list_farms', compact('farms'));
     }
 
     public function showStores(){
@@ -121,6 +122,11 @@ class ManagerController extends Controller
     }
 
     public function showProducts(){
+        $products = Product::all();
+        return view('admin.list_products', compact('products'));
+    }
+
+    public function showProductsPackage(){
         $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/', 
         'http_errors' => false]);
         $listProductPackage = $client->request('GET', 'kigen.assets.ProductPackage', [
@@ -133,7 +139,7 @@ class ManagerController extends Controller
         foreach ($listProductPackage as $package){
             array_push($listProducts, Product::find($package['productSerial']));
         }
-        return view('admin.list_products', compact('listProductPackage', 'listProducts'));
+        return view('admin.list_products_package', compact('listProductPackage', 'listProducts'));
     }
 
     public function activeRoleStoreEmployer(Request $request){

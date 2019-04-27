@@ -7,5 +7,6 @@ return [
   'status' => 'Status',
   'create' => 'Create',
   'confirm' => 'Confirm',
+  'number' => 'Number of products',
   'modal_content' => 'Do you want to create this package ?',
 ];

@@ -24,6 +24,7 @@ class RegisterController extends Controller
             $reqParamArray['username'] = $request['username'];
             $reqParamArray['realname'] = $request['realname'];
             $reqParamArray['password'] = $request['password'];
+            $reqParamArray['identityNumber'] = $request['identityNumber'];
             $reqParamArray['address'] = $request['address'];
             $reqParamArray['birthday'] = $request['birthday'];
             $reqParamArray['phone'] = $request['phone'];

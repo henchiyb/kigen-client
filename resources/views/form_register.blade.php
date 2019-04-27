@@ -108,6 +108,19 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                     </div>
+                    <input class="form-control{{ $errors->has('identityNumber') ? ' is-invalid' : '' }}" placeholder="{{ __('register.identityNumber') }}" name="identityNumber" type="text" required>
+                    @if ($errors->has('identityNumber'))
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('identityNumber') }}</strong>
+                      </span>
+                    @endif
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
                     <input class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" placeholder="{{ __('register.address') }}" name="address" type="text" required>
                     @if ($errors->has('address'))
                       <span class="invalid-feedback" role="alert">

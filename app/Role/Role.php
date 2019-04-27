@@ -17,10 +17,12 @@ class Role extends Model{
     const ROLE_MAIN_MANAGER = 'ROLE_MAIN_MANAGER';
     const ROLE_FARM_MANAGER = 'ROLE_FARM_MANAGER';
     const ROLE_TRANSPORTATION_MANAGER = 'ROLE_TRANSPORTATION_MANAGER';
+    const ROLE_WAREHOUSE_MANAGER = 'ROLE_WAREHOUSE_MANAGER';
     const ROLE_STORE_MANAGER = 'ROLE_STORE_MANAGER';
     const ROLE_EMPLOYER = 'ROLE_EMPLOYER';
     const ROLE_FARMER = 'ROLE_FARMER';
     const ROLE_TRANSPORTATION_EMPLOYER = 'ROLE_TRANSPORTATION_EMPLOYER';
+    const ROLE_WAREHOUSE_EMPLOYER = 'ROLE_WAREHOUSE_EMPLOYER';
     const ROLE_STORE_EMPLOYER = 'ROLE_STORE_EMPLOYER';
     const ROLE_GUEST = 'ROLE_GUEST';
     const ROLE_SUPPORT = 'ROLE_SUPPORT';
@@ -39,6 +41,10 @@ class Role extends Model{
           self::ROLE_TRANSPORTATION_EMPLOYER,
           self::ROLE_MANAGER,
         ],
+        self::ROLE_WAREHOUSE_MANAGER => [
+            self::ROLE_WAREHOUSE_EMPLOYER,
+            self::ROLE_MANAGER,
+        ],
         self::ROLE_STORE_MANAGER => [
           self::ROLE_STORE_EMPLOYER,
           self::ROLE_MANAGER,
@@ -47,6 +53,9 @@ class Role extends Model{
             self::ROLE_EMPLOYER,
         ],
         self::ROLE_TRANSPORTATION_EMPLOYER => [
+            self::ROLE_EMPLOYER,
+        ],
+        self::ROLE_WAREHOUSE_EMPLOYER => [
             self::ROLE_EMPLOYER,
         ],
         self::ROLE_STORE_EMPLOYER => [
@@ -79,9 +88,11 @@ class Role extends Model{
             static::ROLE_MAIN_MANAGER => 'Main Manager',
             static::ROLE_FARM_MANAGER => 'Farm Manager',
             static::ROLE_TRANSPORTATION_MANAGER => 'Transportation Manager',
+            static::ROLE_WAREHOUSE_MANAGER => 'Warehouse Manager',
             static::ROLE_STORE_MANAGER => 'Store Manager',
             static::ROLE_FARMER => 'Farmer',
             static::ROLE_TRANSPORTATION_EMPLOYER => 'Transportation Employer',
+            static::ROLE_WAREHOUSE_EMPLOYER => 'Warehouse Employer',
             static::ROLE_STORE_EMPLOYER => 'Store Employer',
             static::ROLE_GUEST => 'Guest',
             static::ROLE_SUPPORT => 'Support',

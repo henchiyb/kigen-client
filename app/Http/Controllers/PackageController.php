@@ -20,19 +20,20 @@ class PackageController extends Controller
         $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/']);
         try {
             $qryResponse = $client->request('GET', 'kigen.assets.ProductPackage', [
-            'headers' => [
-                'X-Access-Token' => Session::get('currentUser')->accessToken
-            ]
-        ]);
+                'headers' => [
+                    'X-Access-Token' => Session::get('currentUser')->accessToken
+                ]
+            ]);
             $qryResponse = json_decode($qryResponse->getBody(), true);
             $reqParamArray = array();
             $reqParamArray['$class'] = 'kigen.transactions.CreatePackageTransaction';
             $reqParamArray['productPackId'] = sizeof($qryResponse) + 1;
             $reqParamArray['productSerial'] = $request['name'];
-            //TODO
+            $reqParamArray['packageHash'] = Crypt::encrypt("{$request['name']}" . "{Session::get('currentUser')->identityNumber}");
             $reqParamArray['createDate'] = $request['harvest'];
             $reqParamArray['productStatus'] = $request['status'];
             $reqParamArray['farmId'] = $request['farmId'];
+            $reqParamArray['numberOfProducts'] = $request['numberOf'];
             $reqParamArray['unitPrice'] = $request['unitPrice'];
             $farmer = "kigen.participants.Farmer#" . preg_split('/@/', Card::where('userId', Session::get('currentUser')->id)->first()->name)[0];
             $reqParamArray['farmer'] = $farmer;
@@ -55,6 +56,7 @@ class PackageController extends Controller
             // }
             return back()->with('success', 'Tạo thành công');
         } catch (GuzzleException $e) {
+            dd($e);
             return redirect()->back()->with('error', 'Create failed');
         }
     }

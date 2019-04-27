@@ -20,23 +20,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for ($i = 0; $i < sizeof($employers); $i++)
+                                @for ($i = 0; $i < sizeof($farms); $i++)
                                 <tr>
                                     <td class="serial">{{ $i+1 }}</td>
                                     <td class="avatar">
                                         <div class="round-img">
-                                        <a href="#"><img class="rounded-circle" src="/{{ $employers[$i]['img_link'] }}" width="50" height="50" alt=""></a>
+                                        <a href="#"><img class="rounded-circle" src="/{{ $farms[$i]->images->first() }}" width="50" height="50" alt=""></a>
                                         </div>
                                     </td>
-                                    <td>  <span class="name">{{ $employers[$i]['realname'] }}</span> </td>
-                                    <td><span style="white-space: nowrap;" class="">{{ $employers[$i]['address'] }}</span></td>
-                                    <td style="text-align: center">
-                                      @if ($employers[$i]->card == null)
-                                      <span class="badge badge-pending">Không</span>
-                                      @else
-                                      <span class="badge badge-complete">{{ $employers[$i]->card->name }}</span>
-                                      @endif
-                                    </td>
+                                    <td>  <span class="name">{{ $farms[$i]['name'] }}</span> </td>
+                                    <td><span style="white-space: nowrap;" class="">{{ $farms[$i]['address'] }}</span></td>
+                                    <td><span style="white-space: nowrap;" class="">{{ $farms[$i]['description'] }}</span></td>
                                   
                                 </tr> 
                                 @endfor

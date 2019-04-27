@@ -7,5 +7,6 @@ return [
   'status' => 'Trạng thái sản phẩm',
   'create' => 'Tạo lô hàng',
   'confirm' => 'Xác nhận',
+  'number' => 'Số lượng sản phẩm',
   'modal_content' => 'Bạn xác nhận muốn tạo gói sản phẩm này ?',
 ];
