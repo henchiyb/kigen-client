@@ -15,7 +15,6 @@
                                     <th class="serial">STT</th>
                                     <th class="avatar">Ảnh</th>
                                     <th>Tên</th>
-                                    <th>Địa chỉ</th>
                                     <th>Mô tả</th>
                                 </tr>
                             </thead>
@@ -25,11 +24,10 @@
                                     <td class="serial">{{ $i+1 }}</td>
                                     <td class="avatar">
                                         <div class="round-img">
-                                        <a href="#"><img class="rounded-circle" src="/{{ $products[$i]->images->first() }}" width="50" height="50" alt=""></a>
+                                        <a href="#"><img class="rounded-circle" src="/{{ $products[$i]->images[0]['img_link'] }}" width="50" height="50" alt=""></a>
                                         </div>
                                     </td>
                                     <td>  <span class="name">{{ $products[$i]['name'] }}</span> </td>
-                                    <td><span style="white-space: nowrap;" class="">{{ $products[$i]['address'] }}</span></td>
                                     <td><span style="white-space: nowrap;" class="">{{ $products[$i]['description'] }}</span></td>
                                   
                                 </tr> 

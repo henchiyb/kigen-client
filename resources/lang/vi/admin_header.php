@@ -22,4 +22,5 @@ return [
   'register' => 'Đăng ký',
   'login' => 'Đăng nhập',
   'logout' => 'Đăng xuất',
+  'packages' => 'Gói hàng',
 ];

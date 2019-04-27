@@ -29,7 +29,7 @@ class ManagerController extends Controller
         $employers = [];
         // dd(RoleChecker::check($users->get(5), Role::ROLE_EMPLOYER));
         foreach ($users as $user) {
-            if ($user->role == null || RoleChecker::check($user, Role::ROLE_EMPLOYER)){
+            if ($user->role == Role::ROLE_GUEST || RoleChecker::check($user, Role::ROLE_EMPLOYER)){
                 array_push($employers, $user);
             }
         }

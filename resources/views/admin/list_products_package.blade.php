@@ -27,7 +27,7 @@
                                 <tr>
                                   <td class="serial">{{ $i + 1 }}</td>
                                   <td>
-                                      <a href="{{ route('history', $listProducts[$i]['productPackId']) }}"><img class="rounded-circle" src="/{{ $listProductPackage[$i]['imgLink'] }}" width="50" height="50"></a>
+                                      <a href="{{ route('history', (int) $listProductPackage[$i]['productPackId']) }}"><img class="rounded-circle" src="/{{ $listProductPackage[$i]['imgLink'] }}" width="50" height="50"></a>
                                   </td>
                                   <td>  <span class="name">{{ $listProducts[$i]['name'] }}</span> </td>
                                 <td>  <span class="id">{{ $listProductPackage[$i]['productSerial'] }}</span> </td>

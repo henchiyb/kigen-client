@@ -38,10 +38,12 @@
                             @if (Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_MAIN_MANAGER) || 
                                 Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_FARM_MANAGER))
                             <li><i class="menu-icon fa fa-male"></i><a href="{{ route('farmer-employers') }}">{{ __('admin_header.farm_employer') }}</a></li>
-                            @elseif (Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_MAIN_MANAGER) || 
+                            @endif
+                            @if (Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_MAIN_MANAGER) || 
                                 Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_TRANSPORTATION_MANAGER))
                             <li><i class="menu-icon fa fa-male"></i><a href="{{ route('transportation-employers') }}">{{ __('admin_header.transportation_employer') }}</a></li>
-                            @elseif (Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_MAIN_MANAGER) || 
+                            @endif
+                            @if (Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_MAIN_MANAGER) || 
                                 Session::get('currentUser')->hasRole(\App\Role\Role::ROLE_STORE_MANAGER))
                             <li><i class="menu-icon fa fa-male"></i><a href="{{ route('store-employers') }}">{{ __('admin_header.store_employer') }}</a></li>
                             @endif
@@ -54,12 +56,14 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>{{ __('admin_header.list_of_farm_store') }}</a>
                         <ul class="sub-menu children dropdown-menu">
                             @if (\App\Role\RoleChecker::check(Session::get('currentUser'), \App\Role\Role::ROLE_FARM_MANAGER))
-                            <li><i class="menu-icon fa fa-tractor"></i><a href="/farms">{{ __('admin_header.farms') }}</a></li>
-                            @elseif (\App\Role\RoleChecker::check(Session::get('currentUser'), \App\Role\Role::ROLE_FARM_MANAGER))
-                            <li><i class="menu-icon fa fa-store"></i><a href="/stores">{{ __('admin_header.stores') }}</a></li>
-                            @elseif (\App\Role\RoleChecker::check(Session::get('currentUser'), \App\Role\Role::ROLE_WAREHOUSE_MANAGER))
-                            <li><i class="menu-icon fa fa-warehouse"></i><a href="/warehouses">{{ __('admin_header.warehouses') }}</a></li>
+                            <li><i class="menu-icon fa fa-tractor"></i><a href="/admin/farms">{{ __('admin_header.farms') }}</a></li>
                             @endif
+                            @if (\App\Role\RoleChecker::check(Session::get('currentUser'), \App\Role\Role::ROLE_STORE_MANAGER))
+                            <li><i class="menu-icon fa fa-store"></i><a href="/admin/stores">{{ __('admin_header.stores') }}</a></li>
+                            @endif
+                            {{-- @if (\App\Role\RoleChecker::check(Session::get('currentUser'), \App\Role\Role::ROLE_WAREHOUSE_MANAGER))
+                            <li><i class="menu-icon fa fa-warehouse"></i><a href="/admin/warehouses">{{ __('admin_header.warehouses') }}</a></li>
+                            @endif --}}
                         </ul>
                     </li>
                     @endif
@@ -67,6 +71,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-product-hunt"></i>{{ __('admin_header.products') }}</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="menu-icon fa fa-archive"></i><a href="/admin/products">{{ __('admin_header.all_products') }}</a></li>
+                            <li><i class="menu-icon fa fa-archive"></i><a href="/admin/packages">{{ __('admin_header.packages') }}</a></li>
                         </ul>
                     </li>
                     <li class="menu-title">{{ __('admin_header.bonus') }}</li><!-- /.menu-title -->

@@ -101,21 +101,39 @@ class LoginController extends Controller
                 if ($user->role == Role::ROLE_GUEST){
                     if (str_contains($role, 'farmManager')){
                         User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_FARM_MANAGER));
+                        Session::get('currentUser')->role = Role::ROLE_FARM_MANAGER;
                     }
                     else if (str_contains($role, 'transportationManager')){
                         User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_TRANSPORTATION_MANAGER));
+                        Session::get('currentUser')->role = Role::ROLE_TRANSPORTATION_MANAGER;
                     }
                     else if (str_contains($role, 'storeManager')){
                         User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_STORE_MANAGER));
+                        Session::get('currentUser')->role = Role::ROLE_STORE_MANAGER;
+                    }
+                    else if (str_contains($role, 'warehouseManager')){
+                        User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_WAREHOUSE_MANAGER));
+                        Session::get('currentUser')->role = Role::ROLE_WAREHOUSE_MANAGER;
                     }
                     else if (str_contains($role, 'farmer')){
                         User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_FARMER));
+                        Session::get('currentUser')->role = Role::ROLE_FARMER;
                     }
                     else if (str_contains($role, 'transportationEmployer')){
                         User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_TRANSPORTATION_EMPLOYER));
+                        Session::get('currentUser')->role = Role::ROLE_TRANSPORTATION_EMPLOYER;
+                    }
+                    else if (str_contains($role, 'warehouseEmployer')){
+                        User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_WAREHOUSE_EMPLOYER));
+                        Session::get('currentUser')->role = Role::ROLE_WAREHOUSE_EMPLOYER;
                     }
                     else if (str_contains($role, 'storeEmployer')){
                         User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_STORE_EMPLOYER));
+                        Session::get('currentUser')->role = Role::ROLE_STORE_EMPLOYER;
+                    }
+                    else if (str_contains($role, 'manager')){
+                        User::where('id', Session::get('currentUser')->id)->update(array('role' => Role::ROLE_MAIN_MANAGER));
+                        Session::get('currentUser')->role = Role::ROLE_MAIN_MANAGER;
                     }
                 }
             }
