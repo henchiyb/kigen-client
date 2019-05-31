@@ -17,10 +17,6 @@ class RoleChecker
      */
     public static function check(User $user, string $role)
     {
-        // User::where('id', $user->id)->update(array('role' => Role::ROLE_FARM_MANAGER));
-        // $user->save();
-        // Admin has everything
-        // dd($user);
         if ($user->hasRole(Role::ROLE_ADMIN) || $user->hasRole(Role::ROLE_MAIN_MANAGER)) {
             return true;
         }

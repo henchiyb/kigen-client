@@ -40,14 +40,12 @@ class RegisterController extends Controller
                 'json' => $reqParamArray
             ]);
             $response = json_decode($response->getBody(), true);
-            // dd($response);
 
             if (array_key_exists('error', $response)) {
                 return Redirect::back()->withErrors($response['error']['details']['messages']);
             }
             return view('form_login');
         } catch (GuzzleException $e){
-            dd($e);
             return redirect()->back()->with('error', 'Register failed');    
         }
     }

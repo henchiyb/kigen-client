@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::post('/scan','AjaxController@scanQrCode');
+
 Route::get('locale/{locale}', function ($locale){
     Session::put('locale', $locale);
     return redirect()->back();

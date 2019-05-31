@@ -14,6 +14,7 @@ use Session;
 use App\Card;
 use App\Product;
 use DB;
+use QrCode;
 
 class PackageController extends Controller
 {
@@ -43,7 +44,7 @@ class PackageController extends Controller
             Storage::disk('public')->put($image->getFilename().'.'.$extension, File::get($image));
             $reqParamArray['imgLink'] = $image->getFilename().'.'.$extension;
             $params[] = $reqParamArray;
-            // dd($reqParamArray);
+            
             $response = $client->request('POST', 'kigen.transactions.CreatePackageTransaction', [
             'headers' => [
                 'X-Access-Token' => Session::get('currentUser')->accessToken
@@ -52,12 +53,8 @@ class PackageController extends Controller
             'json' => $reqParamArray
         ]);
             $response = json_decode($response->getBody(), true);
-            // if (array_key_exists('error', $response)){
-            //     return Redirect::back()->withErrors($response['error']['details']['messages']);
-            // }
             return back()->with('success', 'Tạo thành công');
         } catch (GuzzleException $e) {
-            dd($e);
             return redirect()->back()->with('error', 'Create failed');
         }
     }
@@ -87,12 +84,7 @@ class PackageController extends Controller
             'json' => $reqParamArray
         ]);
             $response = json_decode($response->getBody(), true);
-            // dd($response);
-            // if (array_key_exists('error', $response)){
-            //     // dd($response);
-            //     return Redirect::back()->with('error', "Send error");
-            // }
-            return back()->with('success', 'Chuyển thành công');
+            return back()->with('success1', QrCode::format('png')->size(100)->generate(Request::url()));
         } catch (GuzzleException $e){
             return redirect()->back()->with('error', 'Transfer failed');
         }
@@ -126,7 +118,6 @@ class PackageController extends Controller
         $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/']);
         try {
             $role = preg_split('/@/', Session::get('currentUser')->card->name)[0];
-            // dd($role);
             if (str_contains($role, 'transportationEmployer')) {
                 $rsName = "resource:kigen.participants.TransportationEmployer#" . $role;
             } elseif (str_contains($role, 'farmer')) {
@@ -152,7 +143,6 @@ class PackageController extends Controller
             foreach ($listProductPackage as $package) {
                 array_push($listProducts, Product::find($package['productSerial']));
             }
-            // dd($listProducts);
             return view('products.show-holding', compact('listProductPackage', 'listProducts'));
             //TODO
         } catch (GuzzleException $e) {

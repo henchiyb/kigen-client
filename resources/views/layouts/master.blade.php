@@ -23,6 +23,7 @@
         <script src="/source/assets/vendor/headroom/headroom.min.js"></script>
         <script src="/source/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
         <script src="/source/assets/js/argon.js?v=1.0.1"></script>
+        <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>    
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>

@@ -32,12 +32,10 @@ class LoginController extends Controller
             $response = json_decode($response->getBody(), true);
             
             $cUser = USer::find($response['userId']);
-            // dd(DB::getQueryLog());
             $cUser->accessToken = $response['id'];
             Session::put('currentUser', $cUser);
             return redirect()->route('welcome');
         } catch (GuzzleException $e) {
-            dd($e);
             return Redirect::back()->with('error', 'Login failed');
         }
     }
@@ -169,7 +167,6 @@ class LoginController extends Controller
             }
             return view('users.user_profile', compact('user', 'role'));
         } catch (GuzzleException $e) {
-            dd($e);
             return Redirect::back()->with("error", "Kết nối thất bại");
         }
     }

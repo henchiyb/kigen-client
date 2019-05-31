@@ -20,20 +20,17 @@ use App\Farm;
 class ManagerController extends Controller
 {
     public function index(){
-        // dd(\App\User::find(1)->employers);
         return view('admin_dashboard');
     }
 
     public function showEmployers(){
         $users = User::all();
         $employers = [];
-        // dd(RoleChecker::check($users->get(5), Role::ROLE_EMPLOYER));
         foreach ($users as $user) {
             if ($user->role == Role::ROLE_GUEST || RoleChecker::check($user, Role::ROLE_EMPLOYER)){
                 array_push($employers, $user);
             }
         }
-        // $employers = Session::get('currentUser')->employers->all();
         return view('admin.list_employers', compact('employers'));
     }
 
@@ -153,9 +150,7 @@ class ManagerController extends Controller
             $parName = 'kigen.participants.StoreEmployer';
             $parNameObj = 'storeEmployer';
         }
-        // dd($request['activeUserId']);
-
-        // $client = new Client(['base_uri' => 'http://54.212.34.46:3000/api/', 'http_errors' => false]);
+        
         $adminClient = new Client(['base_uri' => 'http://54.212.34.46:3001/api/', 'http_errors' => false]);
         try {
             $url = sprintf("users/%d", $request['activeUserId']);
@@ -165,7 +160,6 @@ class ManagerController extends Controller
                 ]
             ]);
             $userResponse = json_decode($userResponse->getBody(), true);
-            // dd($userResponse['realname']);
             $qryResponse = $adminClient->request('GET', $parName, [
                 'headers' => [
                     'X-Access-Token' => Session::get('currentUser')->accessToken
@@ -173,7 +167,6 @@ class ManagerController extends Controller
             ]);
             $qryResponse = json_decode($qryResponse->getBody(), true);
             $id = sizeof($qryResponse) + 1;
-            // dd($id);
             $reqParamArray = array();
             $reqParamArray['employerId'] = $parNameObj . $id;
 
@@ -188,13 +181,13 @@ class ManagerController extends Controller
 
             $response = $adminClient->request('POST', 'system/identities/issue', [
                 'json' => $reqParamArray,
-                'sink' => '/home/nhan/Downloads/kigen-file/active'
+                'sink' => '/var/www/kigen-client/dump-file/active'
             ]);
-
+            
             $data = array('name'=>$userResponse['realname'], 'email'=>$userResponse['email']);
             Mail::send('emails.authentication.role_active', $data, function ($message) use ($data) {
                 $message->to($data['email'], 'Hướng dẫn')->subject('Hướng dẫn kích hoạt tài khoản trên hệ thống');
-                $message->attach('/home/nhan/Downloads/kigen-file/active');
+                $message->attach('/var/www/kigen-client/dump-file/active');
                 $message->from('kigen@gmail.com', 'Kigen System');
             });
             return redirect()->route('all-employers');

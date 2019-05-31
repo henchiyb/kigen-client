@@ -30,7 +30,6 @@ class HistoryController extends Controller
                     'json' => $reqParamArray
                 ]);
             $response = json_decode($response->getBody(), true);
-            // dd($response);
             $url = sprintf('system/historian/%s', $response['transactionId']);
             $qryResponse = $client->request('GET', $url, [
                     'headers' => [
@@ -42,9 +41,7 @@ class HistoryController extends Controller
                 ]);
             $qryResponse = json_decode($qryResponse->getBody(), true);
             $results = $qryResponse['eventsEmitted'][0]['results'];
-            // dd($results);
             $asyncRequestsUrl = [];
-            // $listTransaction = [];
             $listProduct = [];
             for ($i = 0; $i < sizeof($results); $i++) {
                 if ($i % 2 != 0) {
@@ -77,7 +74,6 @@ class HistoryController extends Controller
                     array_push($this->listTransaction, $response);
                 },
                 'rejected' => function ($reason, $index) {
-                    dd($reason);
                 },
             ]);
             

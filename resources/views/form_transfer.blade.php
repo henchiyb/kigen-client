@@ -16,8 +16,11 @@
         <div class="col-lg-5">
           <div class="card bg-secondary shadow border-0">
             <div class="card-body px-lg-5 py-lg-5">
-              <div class="text-center text-muted mb-4">
+              <div class="text-center">
                 <h2>{{ __('transfer.transport_to') }}</h2>
+              </div>
+              <div class="text-center">
+                <button id="btnScanQr" onclick="getScan()" type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#videoModal"><i class="fa fa-qrcode"></i>{{ __('transfer.scanQr') }}</button>
               </div>
               <form id="transfer-form" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
@@ -26,7 +29,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-app"></i></span>
                     </div>
-                    <input class="form-control" placeholder="{{ __('transfer.product') }}" name="product" type="text" required>
+                    <input id="product" class="form-control" placeholder="{{ __('transfer.product') }}" name="product" type="text" required>
                   </div>
                 </div>
                 <div class="form-group">
@@ -76,7 +79,6 @@
         </div>
       </div>
     </div>
-
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -96,11 +98,59 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{ __('transfer.confirm') }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="text-center">
+            <video class="center" width="470" height="300" id="preview"></video>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
   <script>
     function onClickBtnSubmit(){
       $('#submit-handle').click();
       $('#exampleModal').modal('toggle');
     } 
+</script>
+<script type="text/javascript">
+  function getMessage(content) {
+      $.ajax({
+             type:'POST',
+             url:'/scan',
+             data:{ _token: "{{ csrf_token() }}",
+                      datacontent: content
+              },
+             success:function(data) {
+              $("#product").val(data.msg.productPackId);
+              $('#videoModal').modal('toggle');
+             }
+          });
+  }
+</script>
+<script type="text/javascript">
+  function getScan() {
+    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+    scanner.addListener('scan', function (content) {
+        getMessage(content);
+    });
+    Instascan.Camera.getCameras().then(function (cameras) {
+      if (cameras.length > 0) {
+        scanner.start(cameras[0]);
+      } else {
+        console.error('No cameras found.');
+      }
+    }).catch(function (e) {
+      console.error(e);
+    });
+  }
 </script>
 @endsection

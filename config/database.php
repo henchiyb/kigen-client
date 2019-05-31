@@ -43,10 +43,12 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', 'kigenclient.ck0ytthqtn5a.ap-southeast-1.rds.amazonaws.com'),
+            // 'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'kigenclient'),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', 'ngoan123'),
+            // 'password' => env('DB_PASSWORD', '123'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
